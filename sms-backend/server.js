@@ -1,12 +1,19 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const cors = require("cors")
 require('dotenv').config();
 
 const app = express();
 
+app.use(express.urlencoded({ extended: true }))
 // Bodyparser Middleware
-app.use(bodyParser.json());
+app.use(cors())
+app.use(express.json());
+
+
+// Use Routes
+app.use('/api/newStudent', require('./routes/api/newStudent'))
 
 // DB Config
 const db = process.env.mongoURI;

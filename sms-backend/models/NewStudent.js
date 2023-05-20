@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const studentNewSchema = new Schema({
+const newStudentSchema = new Schema({
 
-    firstname: {
+    firstName: {
         type: String,
         required: true
     },
-    lastname: {
+    lastName: {
         type: String,
         required: true
     },
@@ -20,8 +20,7 @@ const studentNewSchema = new Schema({
         required: true
     },
     gradeLevel: {
-        type: mongoose.Types.ObjectId, 
-        ref: 'GradeLevel', 
+        type: Number, 
         required: true 
     },
     applicationLetter: {
@@ -30,10 +29,10 @@ const studentNewSchema = new Schema({
     },
     transcript: {
         type: String,
-        required: true
+        // required: true
     }
 }, { timestamps: true });
 
-const StudentNew = mongoose.model("StudentNew", studentNewSchema);
+const NewStudent = mongoose.model("NewStudent", newStudentSchema);
 
-module.exports = StudentNew;
+module.exports = NewStudent;
