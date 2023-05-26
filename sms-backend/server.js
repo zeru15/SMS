@@ -13,7 +13,8 @@ app.use(express.json());
 
 
 // Use Routes
-app.use('/api/newStudent', require('./routes/api/newStudent'))
+app.use('/api/newStudents', require('./routes/api/newStudents'))
+app.use('/api/announcements', require('./routes/api/announcements'))
 
 // DB Config
 const db = process.env.mongoURI;
@@ -24,6 +25,6 @@ mongoose
    .then(() => console.log('MongoDB Connected Successfully!!!'))
    .catch(err => console.log(err));
 
-const port = process.env.PORT || 6000;
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server started on port ${port}`));

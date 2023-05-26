@@ -9,19 +9,63 @@ import {
 import Homepage1 from "./../Images/Homepage2.jpg"
 import { Grid, Link } from '@material-ui/core'
 import { Form, FormGroup, Label, Input } from 'reactstrap';
+import { addNewStudent } from './../Actions/studentActions';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 
 
 export class Homepage extends Component {
 
   state = {
+    firstName: '',
+    lastName: '',
+    gradeLevel: '',
+    studentEmail: '',
+    parentEmail: '',
+    transcript: null,
+    applicationLetter: null,
     modal: false
   }
 
   toggle = () => this.setState({ modal: !this.state.modal });
 
-  render() {
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
 
+    })
+  }
+
+  onSubmit = e => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("firstName", this.state.firstName)
+    formData.append("lastName", this.state.lastName)
+    formData.append("gradeLevel", this.state.gradeLevel)
+    formData.append("studentEmail", this.state.studentEmail)
+    formData.append("parentEmail", this.state.parentEmail)
+    formData.append("applicationLetter", this.state.applicationLetter)
+    formData.append("transcript", this.state.transcript)
+
+    this.props.addNewStudent(formData);
+
+    this.setState({
+      firstName: '',
+      lastName: '',
+      grade: '',
+      studentEmail: '',
+      parentEmail: '',
+      transcript: null,
+      appLetter: null,
+    })
+  }
+
+  // componentDidMount() {
+  //   this.props.addNewStudent()
+  // }
+
+  render() {
     return (
       <div className='grid grid-cols-2 ' >
         <Modal
@@ -42,8 +86,6 @@ export class Homepage extends Component {
                   className="mb-3"
                   onChange={this.onChange}
                 />
-              </FormGroup>
-              <FormGroup>
                 <Label for='lastName'> Last Name </Label>
                 <Input
                   type="text"
@@ -53,41 +95,33 @@ export class Homepage extends Component {
                   className="mb-3"
                   onChange={this.onChange}
                 />
-              </FormGroup>
-              <FormGroup>
                 <Label for='grade'> Grade </Label>
                 <Input
                   type="text"
-                  name="grade"
-                  id="grade"
-                  placeholder="Grade"
+                  name="gradeLevel"
+                  id="gradeLevel"
+                  placeholder="GradeLevel"
                   className="mb-3"
                   onChange={this.onChange}
                 />
-              </FormGroup>
-              <FormGroup>
-                <Label for='stuEmail'> Student Email </Label>
+                <Label for='studentEmail'> Student Email </Label>
                 <Input
                   type="email"
-                  name="stuEmail"
-                  id="stuEmail"
+                  name="studentEmail"
+                  id="studentEmail"
                   placeholder="Student Email"
                   className="mb-3"
                   onChange={this.onChange}
                 />
-              </FormGroup>
-              <FormGroup>
-                <Label for='parEmail'> Parent Email </Label>
+                <Label for='parentEmail'> Parent Email </Label>
                 <Input
                   type="email"
-                  name="parEmail"
-                  id="parEmail"
+                  name="parentEmail"
+                  id="parentEmail"
                   placeholder="Parent Email"
                   className="mb-3"
                   onChange={this.onChange}
                 />
-              </FormGroup>
-              <FormGroup>
                 <Label for='transcript'> Transcript </Label>
                 <Input
                   type="file"
@@ -97,22 +131,19 @@ export class Homepage extends Component {
                   className="mb-3"
                   onChange={this.onChange}
                 />
-              </FormGroup>
-              <FormGroup>
                 <Label for='appLetter'> Application Letter </Label>
                 <Input
-                  type="textarea"
-                  rows="5"
-                  name="appLetter"
-                  id="appLetter"
+                  type="file"
+                  name="applicationLetter"
+                  id="applicationLetter"
                   placeholder="Application Letter"
                   className="mb-3"
                   onChange={this.onChange}
                 />
+                <Button type="submit" color="dark" style={{ marginTop: '2rem' }} block>
+                  Apply
+                </Button>
               </FormGroup>
-              <Button color="dark" style={{ marginTop: '2rem' }} block>
-                Apply
-              </Button>
             </Form>
           </ModalBody>
           <ModalFooter>
@@ -176,4 +207,15 @@ export class Homepage extends Component {
   }
 }
 
-export default Homepage
+
+Homepage.propTypes = {
+  addNewStudent: PropTypes.func.isRequired,
+  newStudent: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  newStudent: state.newStudent,
+
+})
+
+export default connect(mapStateToProps, { addNewStudent })(Homepage)

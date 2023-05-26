@@ -14,8 +14,11 @@ const announcementSchema = new Schema({
      },
     createdBy: { 
         type: mongoose.Types.ObjectId, 
-        ref: 'User', required: true 
+        ref: 'User', 
+        // required: true 
     }
   }, { timestamps: true });
 
   const Announcement = mongoose.model('Announcement', announcementSchema);
+
+  module.exports = Announcement;
