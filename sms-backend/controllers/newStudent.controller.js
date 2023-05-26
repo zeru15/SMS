@@ -10,7 +10,7 @@ exports.addNewStudent = async (req, res,next) => {
       api_key: "733829174818648",
       api_secret: "5u3CwWI96oOVHo7oGRxcCJ-tpto"
     });
-    // const file = await cloudinary.uploader.upload(req.file.path, {public_id: req.file.originalname})
+    const file = await cloudinary.uploader.upload(req.file.path, {public_id: req.file.originalname})
     // console.log(image)
     // console.log(req.body)
     // console.log(req.file);
@@ -22,7 +22,7 @@ exports.addNewStudent = async (req, res,next) => {
         parentEmail: req.body.parentEmail,
         gradeLevel: req.body.gradeLevel,
         applicationLetter: req.body.applicationLetter,
-        // transcript: file["url"]
+        transcript: file["url"]
     })
     await newNewStudent.save().then(newStudent => res.json(newStudent))
 }

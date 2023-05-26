@@ -19,3 +19,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
+
+
+.headerBg {
+  background-image: url('./Images/school-header.png');
+  background-repeat: no-repeat;
+  background-position:center;
+  
+}
