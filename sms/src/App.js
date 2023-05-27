@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NewStudents from './screens/NewStudents';
 import { Provider } from 'react-redux';
 import Store from './Store';
+import Announcements from './screens/Announcements';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/new-student" element={<NewStudents />} />
+          <Route path="/announcements" element={<Announcements />} />
         </Routes>
       </Provider>
 

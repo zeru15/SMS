@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ADD_NEW_STUDENT, GET_NEW_STUDENTS, NEW_STUDENTS_LOADING } from './Types'
+import { ADD_NEW_STUDENT, GET_NEW_STUDENTS } from './Types'
 
 
 export const getNewStudents = () => async (dispatch, getState) => {

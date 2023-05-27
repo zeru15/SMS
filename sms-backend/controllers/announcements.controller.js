@@ -5,7 +5,8 @@ exports.addAnnouncement = async (req, res) => {
     try {
       const announcement = new Announcement({
         title: req.body.title,
-        description: req.body.description,
+        subtitle: req.body.subtitle,
+        message: req.body.message,
         // createdBy: req.user._id
       });
       await announcement.save();

@@ -8,7 +8,10 @@ const announcementSchema = new Schema({
         type: String, 
         required: true 
     },
-    description: { 
+    subtitle: {
+        type: String
+    },
+    message: { 
         type: String, 
         required: true
      },
