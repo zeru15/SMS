@@ -11,12 +11,20 @@ const userSchema = new Schema ({
         type: String,
         required: true
     },
-    email : {
+    studentId: {
+        type: String,
+        required: true
+    },
+    studentEmail : {
         type: String,
         required: true,
         unique: true
     },
     parentEmail: {
+        type: String,
+        required: true,
+    },
+    teacherEmail: {
         type: String,
         required: true,
     },
@@ -27,6 +35,9 @@ const userSchema = new Schema ({
     phone: { 
         type: String
     },
+    parentphone: { 
+        type: String
+    },
     gradeLevel:{
         type: mongoose.Types.ObjectId, 
         ref: 'GradeLevel', 
@@ -35,18 +46,20 @@ const userSchema = new Schema ({
         type:String,
     },
     section: {
-        type:String
+        type: mongoose.Types.ObjectId, 
+        ref: 'Section', 
     },
     teaching_subject:{
         type:String,
     },
-    qulification:{
+    teacher_qualification:{
         type:String,
     },
     role: { 
         type: String, 
         enum: ['student', 'teacher', 'parent', 'recordOfficer', 'director'], 
-        default: 'student' 
+        default: 'student',
+        required: true
     },
     pic:{
         type:String,

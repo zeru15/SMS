@@ -196,7 +196,7 @@ export class Homepage extends Component {
         <div className=''>
           <div className='text-right mt-2 mr-10'>
             <Button color="dark" onClick={this.toggle}>
-              Register
+              Apply
             </Button>
           </div>
 
