@@ -2,7 +2,7 @@ const Announcement = require('./../models/Announcement')
 
 
 exports.addAnnouncement = async (req, res) => {
-    try {
+    
       const announcement = new Announcement({
         title: req.body.title,
         subtitle: req.body.subtitle,
@@ -11,9 +11,7 @@ exports.addAnnouncement = async (req, res) => {
       });
       await announcement.save();
       res.status(201).send(announcement);
-    } catch (error) {
-      res.status(400).send({ error: error.message });
-    }
+    
   }
 
 
@@ -25,3 +23,10 @@ exports.addAnnouncement = async (req, res) => {
       res.status(500).send({ error: error.message });
     }
   }
+
+
+  exports.deleteAnnouncement = async (req, res,next) => {
+    await Announcement.findById(req.params.id)
+    .then(announcement => announcement.remove().then(() => res.json({success : true})))
+    .catch(err => res.status(404).json({success : false}))
+    }

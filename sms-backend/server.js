@@ -13,6 +13,7 @@ app.use(express.json());
 
 
 // Use Routes
+app.use((req,_,___)=>{console.log(req.body);___()})
 app.use('/api/newStudents', require('./routes/api/newStudents'))
 app.use('/api/announcements', require('./routes/api/announcements'))
 
@@ -21,9 +22,22 @@ const db = process.env.mongoURI;
 
 //Connect to mongo
 mongoose
-   .connect(db)
+   .connect(db, {
+      useNewUrlParser: true
+})
    .then(() => console.log('MongoDB Connected Successfully!!!'))
    .catch(err => console.log(err));
+   
+
+//Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+   //Set static folder
+   app.use(express.static('client/build'));
+
+   app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+   });
+}
 
 const port = process.env.PORT || 5000;
 

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_ANNOUNCEMENT_REQUEST, GET_ANNOUNCEMENT_SUCCESS, GET_ANNOUNCEMENT_FAILED, ADD_ANNOUNCEMENT } from './Types'
+import { GET_ANNOUNCEMENT_REQUEST, GET_ANNOUNCEMENT_SUCCESS, GET_ANNOUNCEMENT_FAILED, ADD_ANNOUNCEMENT, DELETE_ANNOUNCEMENT } from './Types'
 
 export const getAllAnnouncements = () => async dispatch => {
 
@@ -16,7 +16,7 @@ export const getAllAnnouncements = () => async dispatch => {
 
 export const addAnnouncement = announcement => dispatch => {
 
-    console.log(announcement)
+    // console.log(announcement)
 
     axios({
         method: "post",
@@ -28,5 +28,16 @@ export const addAnnouncement = announcement => dispatch => {
             dispatch({
                 type: ADD_ANNOUNCEMENT,
                 payload: res.data
+            }))
+            
+}
+
+export const deleteAnnouncement = id => dispatch => {
+    axios
+        .delete(`http://localhost:5000/api/announcements/${id}`)
+        .then(res =>
+            dispatch({
+                type: DELETE_ANNOUNCEMENT,
+                payload: id
             }))
 }

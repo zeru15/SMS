@@ -6,6 +6,7 @@ import NewStudents from './screens/NewStudents';
 import { Provider } from 'react-redux';
 import Store from './Store';
 import Announcements from './screens/Announcements';
+import Profile from './screens/Profile';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/new-student" element={<NewStudents />} />
           <Route path="/announcements" element={<Announcements />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Provider>
 

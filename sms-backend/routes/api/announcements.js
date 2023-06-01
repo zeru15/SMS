@@ -15,4 +15,10 @@ router.post('/', announcementController.addAnnouncement)
 // @access private
 router.get('/', announcementController.getAllAnnouncements)
 
+
+// @route DELETE api/announcements/:id
+// @desc delete an announcement
+// @access private
+router.delete('/:id', announcementController.deleteAnnouncement)
+
 module.exports = router;

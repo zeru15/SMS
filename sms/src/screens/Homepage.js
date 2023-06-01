@@ -50,6 +50,8 @@ export class Homepage extends Component {
 
     this.props.addNewStudent(formData);
 
+    console.log(formData)
+
     this.setState({
       firstName: '',
       lastName: '',

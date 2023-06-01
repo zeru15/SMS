@@ -1,7 +1,7 @@
 const mongoose  = require('mongoose')
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema ({
+const studentSchema = new Schema ({
 
     firstName: {
         type: String,
@@ -11,31 +11,36 @@ const userSchema = new Schema ({
         type: String,
         required: true
     },
-    studentId: {
-        type: String,
-        required: true
-    },
-    studentEmail : {
+    // studentId: {
+    //     type: String,
+    //     required: true
+    // },
+    email : {
         type: String,
         required: true,
         unique: true
     },
-    parentEmail: {
+    ParentFirstName: {
+        type: String,
+        required: true
+    },
+    parentLastName: {
+        type: String,
+        required: true
+    },
+    parentEmail : {
         type: String,
         required: true,
     },
-    teacherEmail: {
+    parentPhone : {
         type: String,
-        required: true,
+        required: true
     },
     password : {
         type: String,
         required: true
     },
     phone: { 
-        type: String
-    },
-    parentphone: { 
         type: String
     },
     dateOfBirth: { 
@@ -45,6 +50,21 @@ const userSchema = new Schema ({
         type: String
     },
     nationality: {
+        type: String
+    },
+    region: {
+        type: String
+    },
+    city : {
+        type: String
+    },
+    subCity: {
+        type: String
+    },
+    kebele: {
+        type: String
+    },
+    houseNumber: {
         type: String
     },
     height: {
@@ -65,13 +85,15 @@ const userSchema = new Schema ({
     gradeLevel:{
         type: mongoose.Types.ObjectId, 
         ref: 'GradeLevel', 
+        default: null
     },
-    roll_No:{
-        type:String,
-    },
+    // roll_No:{
+    //     type:String,
+    // },
     section: {
         type: mongoose.Types.ObjectId, 
         ref: 'Section', 
+        default: null
     },
     teaching_subject:{
         type:String,
@@ -93,6 +115,6 @@ const userSchema = new Schema ({
     grades: [],
 },{ timestamps: true })
 
-const User = mongoose.model('User', userSchema);
+const Student = mongoose.model('Student', studentSchema);
 
-module.exports = User;
+module.exports = Student;
