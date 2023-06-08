@@ -30,6 +30,10 @@ const newStudentSchema = new Schema({
     transcript: {
         type: String,
         // required: true
+    },
+    isApproved: {
+        type: Boolean,
+        default: null
     }
 }, { timestamps: true });
 

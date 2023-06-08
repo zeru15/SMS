@@ -1,7 +1,7 @@
-const mongoose  = require('mongoose')
+const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-const studentSchema = new Schema ({
+const studentSchema = new Schema({
 
     firstName: {
         type: String,
@@ -15,36 +15,20 @@ const studentSchema = new Schema ({
     //     type: String,
     //     required: true
     // },
-    email : {
+    email: {
         type: String,
         required: true,
         unique: true
     },
-    ParentFirstName: {
+    password: {
         type: String,
         required: true
     },
-    parentLastName: {
-        type: String,
-        required: true
-    },
-    parentEmail : {
-        type: String,
-        required: true,
-    },
-    parentPhone : {
-        type: String,
-        required: true
-    },
-    password : {
-        type: String,
-        required: true
-    },
-    phone: { 
+    phone: {
         type: String
     },
-    dateOfBirth: { 
-        type: String 
+    dateOfBirth: {
+        type: String
     },
     sex: {
         type: String
@@ -55,7 +39,7 @@ const studentSchema = new Schema ({
     region: {
         type: String
     },
-    city : {
+    city: {
         type: String
     },
     subCity: {
@@ -65,7 +49,7 @@ const studentSchema = new Schema ({
         type: String
     },
     houseNumber: {
-        type: String
+        type: Number
     },
     height: {
         type: Number
@@ -82,38 +66,48 @@ const studentSchema = new Schema ({
     medicalStatus: {
         type: String
     },
-    gradeLevel:{
-        type: mongoose.Types.ObjectId, 
-        ref: 'GradeLevel', 
+    parentFirstName: {
+        type: String,
+        required: true
+    },
+    parentLastName: {
+        type: String,
+        required: true
+    },
+    parentEmail: {
+        type: String,
+        required: true,
+    },
+    parentPhone: {
+        type: String,
+        required: true
+    },
+    gradeLevel: {
+        type: String,
+        // ref: 'GradeLevel',
         default: null
     },
     // roll_No:{
     //     type:String,
     // },
     section: {
-        type: mongoose.Types.ObjectId, 
-        ref: 'Section', 
+        type: String,
+        // ref: 'Section',
         default: null
     },
-    teaching_subject:{
-        type:String,
-    },
-    teacher_qualification:{
-        type:String,
-    },
-    role: { 
-        type: String, 
-        enum: ['student', 'teacher', 'parent', 'recordOfficer', 'director'], 
+    role: {
+        type: String,
+        // enum: ['student', 'teacher', 'parent', 'recordOfficer', 'director'], 
         default: 'student',
         required: true
     },
-    img:{
-        type:String,
-        default:"https://res.cloudinary.com/cnq/image/upload/v1586197723/noimage_d4ipmd.png"
+    img: {
+        type: String,
+        default: "https://res.cloudinary.com/cnq/image/upload/v1586197723/noimage_d4ipmd.png"
     },
-    attendance: [],
-    grades: [],
-},{ timestamps: true })
+    // attendance: [],
+    // grades: [],
+}, { timestamps: true })
 
 const Student = mongoose.model('Student', studentSchema);
 

@@ -8,13 +8,6 @@ import {
     ModalFooter,
 } from 'reactstrap';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
-// import {
-//     CardActionArea,
-//     CardMedia,
-//     Button,
-//     Modal,
-//     makeStyles,
-// } from '@material-ui/core';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -26,20 +19,25 @@ import { getAllAnnouncements, addAnnouncement, deleteAnnouncement } from './../A
 
 
 class CardModal extends Component {
-    
-        // this.classes = useStyles();
-        state = {
-            modal: false,
-        };
-    
+
+    // this.classes = useStyles();
+    state = {
+        modal: false,
+        modal3: false
+    };
+
 
     toggle = () => {
         this.setState({ modal: !this.state.modal });
     };
 
+    toggle3 = () => {
+        this.setState({ modal3: !this.state.modal3 });
+    };
+
     onDeleteClick = id => {
         this.props.deleteAnnouncement(id);
-      }
+    }
 
     render() {
         const { announcement } = this.props;
@@ -63,22 +61,26 @@ class CardModal extends Component {
                         </CardContent>
                         <CardActions>
                             <Button onClick={this.toggle} > View </Button>
-                            <Button onClick={this.onDeleteClick.bind(this, announcement._id)} > Delete </Button>
+                            <Button onClick={this.toggle3} > Delete </Button>
                         </CardActions>
                     </Card>
                 </div>
-                {/* </CardActionArea> */}
-                {/* <Modal
-                    open={open}
-                    onClose={this.handleClose}
-                //   className={this.classes.modal}
+
+                <Modal
+                    isOpen={this.state.modal3}
+                    toggle={this.toggle3}
+                    backdrop={"static"}
+                    key={announcement._id}
                 >
-                    <div >
-                        <h2>{announcement.title}</h2>
-                        <p>{announcement.description}</p>
-                        <Button onClick={this.handleClose}>Close</Button>
-                    </div>
-                </Modal> */}
+                    <ModalHeader toggle={this.toggle3}> Confirm </ModalHeader>
+                    <ModalBody>
+                        Are you sure you want to delete?
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button onClick={this.onDeleteClick.bind(this, announcement._id)} > Delete </Button>
+                    </ModalFooter>
+                </Modal>
+
                 <Modal
                     isOpen={this.state.modal}
                     toggle={this.toggle}
@@ -87,7 +89,7 @@ class CardModal extends Component {
                 >
                     <ModalHeader toggle={this.toggle}> {announcement.title} </ModalHeader>
                     <ModalBody>
-                        <h2>{announcement.subtitle}</h2>
+                        {announcement.subtitle} <br/><br/>
                         {announcement.message}
                     </ModalBody>
                     <ModalFooter>
@@ -102,21 +104,22 @@ class CardModal extends Component {
 
 class Announcements extends Component {
 
-        // this.classes = useStyles();
-        state = {
-            modal2: false,
-            title: "",
-            subtitle: "",
-            message: "",
-            createdBy: ""
-        };
-    
+    // this.classes = useStyles();
+    state = {
+        modal2: false,
+        title: "",
+        subtitle: "",
+        message: "",
+        createdBy: ""
+    };
+
 
     toggle2 = () => {
         this.setState({ modal2: !this.state.modal2 });
     };
 
     onChange = (e) => {
+        console.log('e.target.name', e.target.name)
         this.setState({
             [e.target.name]: e.target.value,
 
@@ -124,15 +127,20 @@ class Announcements extends Component {
     }
 
     onSubmit = e => {
-        e.preventDefault();
+        // e.preventDefault();
         const formData = new FormData();
         formData.append("title", this.state.title)
         formData.append("subtitle", this.state.subtitle)
         formData.append("message", this.state.message)
-        formData.append("createdBy", this.state.createdBy)
+        // formData.append("createdBy", this.state.createdBy)
+        const reqBody = {
+            title: this.state.title,
+            subtitle: this.state.subtitle,
+            message: this.state.message
+        }
 
-        this.props.addAnnouncement(formData);
-        
+        this.props.addAnnouncement(formData, reqBody);
+
 
         this.setState({
             title: "",
@@ -223,7 +231,7 @@ class Announcements extends Component {
 
                     <div className='grid grid-cols-3 '>
                         {announcements.reverse().map((announcement) => (
-                            <CardModal key={announcement._id} announcement={announcement} />
+                            <CardModal key={announcement._id} announcement={announcement} deleteAnnouncement={this.props.deleteAnnouncement} />
                         ))}
                     </div>
                 </div>

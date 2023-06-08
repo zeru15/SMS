@@ -172,8 +172,6 @@ export class Homepage extends Component {
                   className="mb-3"
                   onChange={this.onChange}
                 />
-              </FormGroup>
-              <FormGroup>
                 <Label for='password'> Password </Label>
                 <Input
                   type="password"

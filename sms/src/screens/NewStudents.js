@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Sidebar from '../Components/Sidebar'
-import Banner from './../Images/school-header.png'
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,42 +8,69 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { DataGrid } from '@mui/x-data-grid';
 import { getNewStudents } from './../Actions/studentActions';
+import { registerUser } from './../Actions/authActions';
+import { approveNewStudent } from './../Actions/studentActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Button, fabClasses } from '@mui/material';
+import finalPropsSelectorFactory from 'react-redux/es/connect/selectorFactory';
 
 
 
 
-const columns = [
-    // { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'firstName', headerName: 'First name', width: 130 },
-    { field: 'lastName', headerName: 'Last name', width: 130 },
-    {
-        field: 'gradeLevel',
-        headerName: 'Applying Grade',
-        type: 'number',
-        width: 120,
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
     },
-    { field: 'studentEmail', headerName: 'Student Email', width: 170 },
-    { field: 'parentEmail', headerName: 'Parent Email', width: 180 },
-    { field: 'applicationLetter', headerName: 'Application Letter', width: 150 },
-    { field: 'transcript', headerName: 'Transcript', width: 130 },
-];
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
+}));
 
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 0,
+    },
+}));
 
 
 export class NewStudents extends Component {
+
+    // state = {
+    //     isApproved: null
+    // }
 
     componentDidMount() {
         this.props.getNewStudents()
     }
 
+     onApprove(id, value)  {
+        const approvedStudent = this.props.newStudent.newStudents.find(newStudent => newStudent._id === id);
+        console.log(approvedStudent.studentEmail);
+        // approvedStudent.isApproved == true
+        this.props.approveNewStudent(approvedStudent._id, true)
+        this.props.registerUser(approvedStudent.studentEmail)
+    }
+
+    onReject = (id) => {
+        const rejectedStudent = this.props.newStudent.newStudents.find(newStudent => newStudent._id === id);
+        console.log(rejectedStudent.studentEmail);
+        this.setState({
+            isApproved: false
+        })
+        // this.props.approveNewStudent(rejectedStudent.isApproved)
+    }
+
     render() {
 
         const { newStudents } = this.props.newStudent
-        
+
         return (
             <div className='flex  '>
 
@@ -59,31 +85,41 @@ export class NewStudents extends Component {
 
                     <div className='mt-12 mx-2'>
                         <div style={{ height: 400, width: '100%' }}>
-                            <DataGrid
-                                rows={
-                                    newStudents.map((newStudent) => {
-                                        return {
-                                            id: newStudent._id,
-                                            firstName: newStudent.firstName,
-                                            lastName: newStudent.lastName,
-                                            gradeLevel: newStudent.gradeLevel,
-                                            studentEmail: newStudent.studentEmail,
-                                            parentEmail: newStudent.parentEmail,
-                                            applicationLetter: newStudent.applicationLetter,
-                                            transcript: newStudent.transcript
-                                        }
 
-                                    })
-                                }
-                                columns={columns}
-                                initialState={{
-                                    pagination: {
-                                        paginationModel: { page: 0, pageSize: 5 },
-                                    },
-                                }}
-                                pageSizeOptions={[5, 10]}
-                                checkboxSelection
-                            />
+                            <TableContainer component={Paper}>
+                                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <StyledTableCell>First name</StyledTableCell>
+                                            <StyledTableCell align="right">Last Name</StyledTableCell>
+                                            <StyledTableCell align="right">Applying Grade</StyledTableCell>
+                                            <StyledTableCell align="right">Student Email</StyledTableCell>
+                                            <StyledTableCell align="right">Parent Email</StyledTableCell>
+                                            <StyledTableCell align="right">Application Letter</StyledTableCell>
+                                            <StyledTableCell align="right">Transcript</StyledTableCell>
+                                            <StyledTableCell align="right">Approval</StyledTableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {newStudents.map((newStudent) => (
+                                            <StyledTableRow key={newStudent._id}>
+                                                <StyledTableCell component="th" scope="row">
+                                                    {newStudent.firstName}
+                                                </StyledTableCell>
+                                                <StyledTableCell align="right" >{newStudent.lastName}</StyledTableCell>
+                                                <StyledTableCell align="right">{newStudent.gradeLevel}</StyledTableCell>
+                                                <StyledTableCell align="right">{newStudent.studentEmail}</StyledTableCell>
+                                                <StyledTableCell align="right">{newStudent.parentEmail}</StyledTableCell>
+                                                <StyledTableCell align="right">{newStudent.applicationLetter}</StyledTableCell>
+                                                <StyledTableCell align="right">{newStudent.transcript}</StyledTableCell>
+                                                <StyledTableCell align="right">
+                                                    <button onClick={this.onApprove.bind(this, newStudent._id)} className='bg-blue-500 text-white font-bold py-2 px-2 rounded'> Approve </button>
+                                                    <button onClick={this.onReject.bind(this, newStudent._id)} className='bg-red-500 text-white font-bold py-2 px-2 mt-1.5 rounded' > Reject </button> </StyledTableCell>
+                                            </StyledTableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
                         </div>
                     </div>
                 </div>
@@ -94,13 +130,16 @@ export class NewStudents extends Component {
 
 NewStudents.propTypes = {
     getNewStudents: PropTypes.func.isRequired,
+    registerUser: PropTypes.func.isRequired,
+    approveNewStudent: PropTypes.func.isRequired,
     newStudent: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
     newStudent: state.newStudent,
+    users: state.users
 
 })
 
 
-export default connect(mapStateToProps, {getNewStudents})(NewStudents)
+export default connect(mapStateToProps, { getNewStudents, registerUser, approveNewStudent })(NewStudents)

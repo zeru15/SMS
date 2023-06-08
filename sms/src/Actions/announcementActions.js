@@ -14,16 +14,13 @@ export const getAllAnnouncements = () => async dispatch => {
     }
 }
 
-export const addAnnouncement = announcement => dispatch => {
+export const addAnnouncement = (announcement,body) => dispatch => {
 
-    // console.log(announcement)
+    console.log('announcement',announcement)
+    // url: "http://localhost:5000/api/announcements",
+    
 
-    axios({
-        method: "post",
-        url: "http://localhost:5000/api/announcements",
-        data: announcement,
-        headers: { "Content-Type": "multipart/form-data" },
-    })
+    axios.post("http://localhost:5000/api/announcements",body)
         .then(res =>
             dispatch({
                 type: ADD_ANNOUNCEMENT,
@@ -33,6 +30,7 @@ export const addAnnouncement = announcement => dispatch => {
 }
 
 export const deleteAnnouncement = id => dispatch => {
+    console.log('ann del',id)
     axios
         .delete(`http://localhost:5000/api/announcements/${id}`)
         .then(res =>

@@ -1,8 +1,11 @@
 import { combineReducers } from 'redux';
-import { newStudentReducer } from './studentReducer';
+import { newStudentReducer, studentReducer } from './studentReducer';
 import { announcementReducer } from './announcementReducer';
+import { authReducer } from './authReducer';
 
 export default combineReducers({
     newStudent: newStudentReducer,
-    announcement: announcementReducer
+    announcement: announcementReducer,
+    student: studentReducer,
+    auth: authReducer
 })

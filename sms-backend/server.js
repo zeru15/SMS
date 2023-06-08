@@ -16,6 +16,8 @@ app.use(express.json());
 app.use((req,_,___)=>{console.log(req.body);___()})
 app.use('/api/newStudents', require('./routes/api/newStudents'))
 app.use('/api/announcements', require('./routes/api/announcements'))
+app.use('/api/students', require('./routes/api/students'))
+app.use('/api/users', require('./routes/api/users'))
 
 // DB Config
 const db = process.env.mongoURI;
