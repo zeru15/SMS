@@ -48,7 +48,17 @@ export class Homepage extends Component {
     formData.append("applicationLetter", this.state.applicationLetter)
     formData.append("transcript", this.state.transcript)
 
-    this.props.addNewStudent(formData);
+    const reqBody = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      gradeLevel: this.state.gradeLevel,
+      studentEmail: this.state.studentEmail,
+      parentEmail: this.state.parentEmail,
+      applicationLetter: this.state.applicationLetter,
+      transcript: this.state.transcript
+  }
+
+    this.props.addNewStudent(formData, reqBody);
 
     console.log(formData)
 

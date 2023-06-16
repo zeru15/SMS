@@ -8,6 +8,7 @@ import Store from './Store';
 import Announcements from './screens/Announcements';
 import Profile from './screens/Profile';
 import Register from './screens/Register';
+import Attendance from './screens/Attendance';
 
 function App() {
   return (
@@ -16,10 +17,11 @@ function App() {
       <Provider store={Store}>
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/new-student" element={<NewStudents />} />
+          <Route path="/new-students" element={<NewStudents />} />
           <Route path="/announcements" element={<Announcements />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/attendance" element={<Attendance />} />
         </Routes>
       </Provider>
 

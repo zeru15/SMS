@@ -31,25 +31,25 @@ export const registerUser = ( email ) => dispatch => {
          });
 }
 
-// //Reject User
-// export const rejectUser = ( email ) => dispatch => {
+//Reject User
+export const rejectUser = ( email ) => dispatch => {
 
-//     console.log(email)
-//     //Headers
-//     const config = {
-//         headers: { 
-//             "Content-type": "application/json"
-//         }
-//     }
+    console.log(email)
+    //Headers
+    const config = {
+        headers: { 
+            "Content-type": "application/json"
+        }
+    }
 
-//     //Request body
-//     const body = JSON.stringify({ email })
+    //Request body
+    const body = JSON.stringify({ email })
 
-//     axios.post('http://localhost:5000/api/users/reject', body, config )
-//          .then(res => dispatch({
-//             payload: res.data
-//          }))
-//          .catch(err => {
-//             // dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL' ));
-//          });
-// }
+    axios.post('http://localhost:5000/api/users/reject', body, config )
+         .then(res => dispatch({
+            payload: res.data
+         }))
+         .catch(err => {
+            // dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL' ));
+         });
+}

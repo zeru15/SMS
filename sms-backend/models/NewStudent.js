@@ -25,7 +25,7 @@ const newStudentSchema = new Schema({
     },
     applicationLetter: {
         type: String,
-        required: true
+        // required: true
     },
     transcript: {
         type: String,

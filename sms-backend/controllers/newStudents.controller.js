@@ -21,7 +21,7 @@ exports.addNewStudent = async (req, res, next) => {
         studentEmail: req.body.studentEmail,
         parentEmail: req.body.parentEmail,
         gradeLevel: req.body.gradeLevel,
-        applicationLetter: req.body.applicationLetter,
+        // applicationLetter: req.body.applicationLetter,
         // transcript: file["url"]
     })
     await newNewStudent.save().then(newStudent => res.json(newStudent))
@@ -39,7 +39,7 @@ exports.approveNewStudents = async (req, res) => {
       const id = req.params.id;
       const newValue = req.body.isApproved;
 
-      const newStudent = await NewStudent.findOneAndUpdate(id, { isApproved: newValue }, { new: true });
+      const newStudent = await NewStudent.findByIdAndUpdate(id, { isApproved: newValue }, { new: true });
 
       res.json({ message: 'Attribute successfully updated', newStudent });
     } catch (err) {

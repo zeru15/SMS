@@ -15,16 +15,11 @@ export const getNewStudents = () => async (dispatch, getState) => {
         })
 };
 
-export const addNewStudent = newStudent => dispatch => {
+export const addNewStudent = (newStudent, body) => dispatch => {
 
-    console.log(newStudent)
+    console.log(body)
 
-    axios({
-        method: "post",
-        url: "http://localhost:5000/api/newStudents",
-        data: newStudent,
-        headers: { "Content-Type": "multipart/form-data" },
-    })
+    axios.post("http://localhost:5000/api/newStudents",body)
         .then(res =>
             dispatch({
                 type: ADD_NEW_STUDENT,
@@ -62,7 +57,7 @@ export const approveNewStudent = (id, isApproved) => async (dispatch) => {
   };
 
 
-export const getStudent = () => async (dispatch, getState) => {
+export const getAllStudents = () => async (dispatch, getState) => {
 
     await axios
         .get('http://localhost:5000/api/students')
