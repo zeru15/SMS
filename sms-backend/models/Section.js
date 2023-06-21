@@ -5,6 +5,7 @@ const sectionSchema = new Schema({
 
     sectionName:{
         type: String, 
+        required: true
     },
   
 }, { timestamps: true });

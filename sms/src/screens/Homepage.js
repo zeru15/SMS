@@ -25,10 +25,13 @@ export class Homepage extends Component {
     parentEmail: '',
     transcript: null,
     applicationLetter: null,
-    modal: false
+    modal: false,
+    modal2: false
   }
 
   toggle = () => this.setState({ modal: !this.state.modal });
+
+  toggle2 = () => this.setState({ modal2: !this.state.modal2 });
 
   onChange = (e) => {
     this.setState({
@@ -38,7 +41,7 @@ export class Homepage extends Component {
   }
 
   onSubmit = e => {
-    e.preventDefault();
+    // e.preventDefault();
     const formData = new FormData();
     formData.append("firstName", this.state.firstName)
     formData.append("lastName", this.state.lastName)
@@ -56,7 +59,7 @@ export class Homepage extends Component {
       parentEmail: this.state.parentEmail,
       applicationLetter: this.state.applicationLetter,
       transcript: this.state.transcript
-  }
+    }
 
     this.props.addNewStudent(formData, reqBody);
 
@@ -80,6 +83,20 @@ export class Homepage extends Component {
   render() {
     return (
       <div className='grid grid-cols-2 ' >
+
+        <Modal
+          isOpen={this.state.modal2}
+          toggle={this.toggle2}
+          backdrop={"static"}
+        >
+          <ModalHeader toggle={this.toggle2}> Confirmed!!! </ModalHeader>
+          <ModalBody>
+            Your Application Has Been Sent!
+          </ModalBody>
+          <ModalFooter>
+          </ModalFooter>
+        </Modal>
+
         <Modal
           isOpen={this.state.modal}
           toggle={this.toggle}
@@ -152,7 +169,7 @@ export class Homepage extends Component {
                   className="mb-3"
                   onChange={this.onChange}
                 />
-                <Button type="submit" color="dark" style={{ marginTop: '2rem' }} block>
+                <Button type="submit" onClick ={this.toggle2} color="dark" style={{ marginTop: '2rem' }} block>
                   Apply
                 </Button>
               </FormGroup>

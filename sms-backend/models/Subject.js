@@ -5,10 +5,7 @@ const subjectSchema = new Schema({
 
     subjectName:{
         type: String, 
-    },
-   
-    subjectCode:{
-        type: String, 
+        required: true
     }
   
 }, { timestamps: true });

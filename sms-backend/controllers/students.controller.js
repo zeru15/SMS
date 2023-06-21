@@ -49,3 +49,31 @@ exports.getAllStudents = async (req, res, next) => {
             .then(student => res.json(student))
 }
 
+
+exports.studentProfile = async (req, res) => {
+    console.log(req.params)
+
+    try {
+        const id = req.params.id;
+
+        const studentProfile = await Student.findById(id)
+
+        res.json({studentProfile})
+    } catch (err) {
+        res.status(400).json({ error: err });
+    }
+}
+
+exports.assignSection = async (req, res) => {
+
+    try {
+        const id = req.params.id;
+        const newValue = req.body.section;
+  
+        const student = await Student.findByIdAndUpdate(id, { section: newValue }, { new: true });
+  
+        res.json({ message: 'Section successfully assigned!', student });
+      } catch (err) {
+        res.status(500).json({ error: err });
+      }
+}

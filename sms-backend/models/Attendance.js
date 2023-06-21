@@ -11,6 +11,10 @@ const attendanceSchema = new Schema({
     isPresent: { 
         type: Boolean,
         required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now()
     }
   }, { timestamps: true });
 

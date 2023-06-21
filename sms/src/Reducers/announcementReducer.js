@@ -1,11 +1,11 @@
 import { GET_ANNOUNCEMENT_REQUEST, GET_ANNOUNCEMENT_SUCCESS, GET_ANNOUNCEMENT_FAILED, ADD_ANNOUNCEMENT, DELETE_ANNOUNCEMENT } from './../Actions/Types'
 
 const initialState = {
-    announcements: [],
+    
     loading: false,
 }
 
-export const announcementReducer = (state = initialState, action) => {
+export const announcementReducer = (state = {announcements: []}, action) => {
 
     switch (action.type) {
 

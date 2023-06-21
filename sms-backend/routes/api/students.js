@@ -13,9 +13,22 @@ router.post('/', upload.single('img'),  studentsController.addStudent )
 
 
 // @route GET api/students
-// @desc Get All Studentss
+// @desc Get All Students
 // @access public
 router.get('/', studentsController.getAllStudents)
+
+
+// @route GET api/students/:id
+// @desc Get Student Profile
+// @access public
+router.get('/:id', studentsController.studentProfile)
+
+
+// @route GET api/students/:id
+// @desc Get Student Profile
+// @access public
+router.put('/:id', studentsController.assignSection)
+
 
 
 module.exports = router;

@@ -22,11 +22,14 @@ class Sidebar extends Component {
                 </div>
 
                 <div className='mt-4 ml-4 px-4 py-2  text-xl  text-center hover:bg-amber-500 rounded-s ease-out duration-200 '>
-                    <a href="new-students" className='text-white no-underline md:ml-4'> Student Application </a>
+                    <a href="newStudents" className='text-white no-underline md:ml-4'> Student Application </a>
                 </div>
 
                 <div className='mt-4 ml-4 px-4 py-2 text-xl   text-center hover:bg-amber-500 rounded-s ease-out duration-200 '>
                     <a href="attendance" className='text-white no-underline md:ml-4'> Attendance </a>
+                </div>
+                <div className='mt-4 ml-4 px-4 py-2 text-xl   text-center hover:bg-amber-500 rounded-s ease-out duration-200 '>
+                    <a href="studentManagement" className='text-white no-underline md:ml-4'> Student Management </a>
                 </div>
                 <div className='mt-8 px-4 py-2  text-xl bg-amber-500 text-center  rounded-s ease-out duration-200 '>
                     <a  href="/" className='text-white no-underline md:ml-4'> Logout </a>

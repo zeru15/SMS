@@ -89,7 +89,7 @@ class CardModal extends Component {
                 >
                     <ModalHeader toggle={this.toggle}> {announcement.title} </ModalHeader>
                     <ModalBody>
-                        {announcement.subtitle} <br/><br/>
+                        {announcement.subtitle} <br /><br />
                         {announcement.message}
                     </ModalBody>
                     <ModalFooter>
@@ -171,7 +171,7 @@ class Announcements extends Component {
                         toggle={this.toggle2}
                         backdrop={"static"}
                     >
-                        <ModalHeader toggle={this.toggle2}> Apply for Registration </ModalHeader>
+                        <ModalHeader toggle={this.toggle2}> Add Announcement </ModalHeader>
                         <ModalBody>
                             <Form onSubmit={this.onSubmit}>
                                 <FormGroup>
@@ -199,15 +199,6 @@ class Announcements extends Component {
                                         name="message"
                                         id="message"
                                         placeholder="Message"
-                                        className="mb-3"
-                                        onChange={this.onChange}
-                                    />
-                                    <Label for='createdBy'> Created By </Label>
-                                    <Input
-                                        type="text"
-                                        name="createdBy"
-                                        id="createdBy"
-                                        placeholder="Created By"
                                         className="mb-3"
                                         onChange={this.onChange}
                                     />

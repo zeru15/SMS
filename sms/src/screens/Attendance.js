@@ -63,7 +63,8 @@ export class Attendance extends Component {
     }
 
     onPresent = (id) => {
-        this.props.markAttendance(id, true)
+        const currentDate = new Date().toLocaleDateString();
+        this.props.markAttendance(id, true, currentDate)
     }
 
     onAbsent = (id) => {

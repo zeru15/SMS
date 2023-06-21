@@ -8,6 +8,15 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import ManIcon from '@mui/icons-material/Man';
+import EventIcon from '@mui/icons-material/Event';
+import WcIcon from '@mui/icons-material/Wc';
+import LanguageIcon from '@mui/icons-material/Language';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import { studentProfile } from './../Actions/studentActions'
+import { connect } from 'react-redux';
 
 export class Profile extends Component {
   constructor(props) {
@@ -24,7 +33,11 @@ export class Profile extends Component {
     this.setState({ value: index });
   };
 
+  
+
   render() {
+
+    const { students } = this.props.student
 
     const { value } = this.state;
     // const theme = useTheme();
@@ -95,7 +108,30 @@ export class Profile extends Component {
                 onChangeIndex={this.handleChangeIndex}
               >
                 <TabPanel value={value} index={0} >
-                  Item One
+
+                  {students.map(student => {
+                    return (
+                      <div>
+                        <p className='personal-info-heading'>
+                          <img src={student.img} alt='image' height='200px' width='200px' />
+                          <h2>{`${student.firstname}` + ` ` + `${student.lastname}`}</h2>
+                        </p><hr />
+                        <div className='personal-info'>
+                          <ul>
+                            <li><EmailIcon /> Email <br /> {student.email} </li>
+                            <li><PhoneAndroidIcon />Phone no <br />{student.phone} </li>
+                            <li><EventIcon />Date Of Birth <br /> {student.dateOfBirth} </li>
+                            <li><WcIcon />Sex <br /> {student.sex} </li>
+                            <li><LanguageIcon />Nationality <br /> {student.nationality} </li>
+                            <li><LanguageIcon />Region<br /> {student.region} </li>
+                            <li><LocationCityIcon />City <br /> {student.city} </li>
+                          </ul>
+
+                        </div>
+                      </div>
+                    )
+                  })
+                  }
                 </TabPanel>
                 <TabPanel value={value} index={1} >
                   Item Two
@@ -113,4 +149,14 @@ export class Profile extends Component {
   }
 }
 
-export default Profile
+Profile.propTypes = {
+  // getAllStudents: PropTypes.func.isRequired,
+  studentProfile: PropTypes.func.isRequired,
+  student: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  student: state.student,
+})
+
+export default connect(mapStateToProps, { studentProfile })(Profile)

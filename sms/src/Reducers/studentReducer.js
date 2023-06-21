@@ -1,16 +1,14 @@
 import {
     ADD_NEW_STUDENT, GET_NEW_STUDENTS, NEW_STUDENTS_LOADING,
-    STUDENTS_LOADING, ADD_STUDENT, GET_STUDENTS, EDIT_NEW_STUDENT
+    STUDENTS_LOADING, ADD_STUDENT, GET_STUDENTS, EDIT_NEW_STUDENT, GET_SELECTED_STUDENT
 } from './../Actions/Types'
 
 const initialState = {
-    newStudents: [],
-    students: [],
     loading: false,
     newStudent: null
 }
 
-export const newStudentReducer = (state = initialState, action) => {
+export const newStudentReducer = (state = { newStudents: [] }, action) => {
     switch (action.type) {
         case NEW_STUDENTS_LOADING:
             return {
@@ -42,7 +40,7 @@ export const newStudentReducer = (state = initialState, action) => {
 }
 
 
-export const studentReducer = (state = initialState, action) => {
+export const studentReducer = (state = { students: [], selectedStudent: {} }, action) => {
     switch (action.type) {
         case STUDENTS_LOADING:
             return {
@@ -60,6 +58,12 @@ export const studentReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 students: action.payload
+            };
+        case GET_SELECTED_STUDENT:
+            return {
+                ...state,
+                loading: false,
+                selectedStudent: action.payload
             };
         default:
             return state;

@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
 import Sidebar from '../Components/Sidebar'
+import {
+    Button,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+  } from 'reactstrap';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -22,7 +29,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { Button } from 'reactstrap';
 
 
 
@@ -54,8 +60,15 @@ export class NewStudents extends Component {
         super(props);
         this.state = {
             value: 0,
+            modal: false,
+            modal2: false
         };
     }
+
+    // toggle = () => this.setState({ modal: !this.state.modal });
+
+    // toggle2 = () => this.setState({ modal2: !this.state.modal2 });
+
     handleChange = (event, newValue) => {
         this.setState({ value: newValue });
     };
@@ -69,10 +82,12 @@ export class NewStudents extends Component {
         this.props.getNewStudents()
     }
 
-    onApprove(id, value) {
+    onApprove(id) {
         console.log(id)
         const approvedStudent = this.props.newStudent.newStudents.find(newStudent => newStudent._id === id);
         console.log(approvedStudent.studentEmail);
+
+        this.setState({ modal: !this.state.modal });
 
         this.props.approveNewStudent(approvedStudent._id, true)
         this.props.registerUser(approvedStudent.studentEmail)
@@ -82,6 +97,8 @@ export class NewStudents extends Component {
         console.log(id)
         const rejectedStudent = this.props.newStudent.newStudents.find(newStudent => newStudent._id === id);
         console.log(rejectedStudent.studentEmail);
+
+        this.setState({ modal2: !this.state.modal2 });
 
         this.props.rejectUser(rejectedStudent.studentEmail)
         this.props.approveNewStudent(rejectedStudent._id, false)
@@ -133,6 +150,32 @@ export class NewStudents extends Component {
         return (
             <div className='flex  '>
 
+                <Modal
+                    isOpen={this.state.modal}
+                    toggle={this.toggle}
+                    backdrop={"static"}
+                >
+                    <ModalHeader toggle={this.toggle}> Student Approved! </ModalHeader>
+                    <ModalBody>
+                        Approval Email Has Been Sent!
+                    </ModalBody>
+                    <ModalFooter>
+                    </ModalFooter>
+                </Modal>
+
+                <Modal
+                    isOpen={this.state.modal2}
+                    toggle={this.toggle2}
+                    backdrop={"static"}
+                >
+                    <ModalHeader toggle={this.toggle2}> Student Rejected! </ModalHeader>
+                    <ModalBody>
+                        Rejection Email Has Been Sent!
+                    </ModalBody>
+                    <ModalFooter>
+                    </ModalFooter>
+                </Modal>
+
                 {/* Left Side */}
                 <Sidebar />
 
@@ -181,7 +224,7 @@ export class NewStudents extends Component {
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
-                                                    {newStudents.map((newStudent) => (
+                                                    {newStudents.reverse().map((newStudent) => (
                                                         <StyledTableRow key={newStudent._id}>
                                                             <StyledTableCell component="th" scope="row">
                                                                 {newStudent.firstName}
@@ -194,7 +237,8 @@ export class NewStudents extends Component {
                                                             <StyledTableCell align="right">{newStudent.transcript}</StyledTableCell>
                                                             <StyledTableCell align="right">
                                                                 <Button disabled={newStudent.isApproved === null ? false : true} color="primary" onClick={this.onApprove.bind(this, newStudent._id)} className='text-white font-bold py-2 px-2 rounded'> Approve </Button>
-                                                                <Button disabled={newStudent.isApproved === null ?  false: true} color="danger" onClick={this.onReject.bind(this, newStudent._id)} className='text-white font-bold py-2 px-2 mt-1.5 rounded' > Reject </Button> </StyledTableCell>
+                                                                <Button disabled={newStudent.isApproved === null ? false : true} color="danger" onClick={this.onReject.bind(this, newStudent._id)} className='text-white font-bold py-2 px-2 mt-1.5 rounded' > Reject </Button> 
+                                                                </StyledTableCell>
                                                         </StyledTableRow>
                                                     ))}
                                                 </TableBody>
@@ -219,7 +263,7 @@ export class NewStudents extends Component {
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
-                                                    {approvedStudents.map((newStudent) => (
+                                                    {approvedStudents.reverse().map((newStudent) => (
                                                         <StyledTableRow key={newStudent._id}>
                                                             <StyledTableCell component="th" scope="row">
                                                                 {newStudent.firstName}
@@ -255,7 +299,7 @@ export class NewStudents extends Component {
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
-                                                    {rejectedStudents.map((newStudent) => (
+                                                    {rejectedStudents.reverse().map((newStudent) => (
                                                         <StyledTableRow key={newStudent._id}>
                                                             <StyledTableCell component="th" scope="row">
                                                                 {newStudent.firstName}

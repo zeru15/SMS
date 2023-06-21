@@ -13,7 +13,8 @@ const newStudentSchema = new Schema({
     },
     studentEmail: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     parentEmail: {
         type: String,
