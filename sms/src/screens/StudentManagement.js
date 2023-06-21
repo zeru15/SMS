@@ -21,6 +21,7 @@ import { Column } from 'primereact/column';
 import { getAllStudents } from './../Actions/studentActions';
 import { studentProfile, assignSection } from './../Actions/studentActions';
 import { getAllSections, addSection } from './../Actions/sectionActions';
+import { getAllSubjects, assignSubject, getAllAssignedSubjects, deleteAssignedSubject } from './../Actions/subjectActions';
 import { connect } from 'react-redux';
 import { Link } from '@material-ui/core'
 import Profile from './Profile';
@@ -34,6 +35,7 @@ export class StudentManagement extends Component {
         this.state = {
             value: 0,
             section: {},
+            subject: {},
             modal: false,
             modal2: false,
             newSection: ""
@@ -50,18 +52,35 @@ export class StudentManagement extends Component {
     componentDidMount() {
         this.props.getAllStudents()
         this.props.getAllSections()
+        this.props.getAllSubjects()
+        this.props.getAllAssignedSubjects()
     }
 
     onProfileView = (id) => {
         <Profile id="id" />
     }
 
-    handleDropdownChange = (id, value) => {
+    handleSectionDropdownChange = (id, value) => {
         const { section } = this.state;
         section[id] = value;
         this.setState({ section });
         console.log(section[id])
         this.props.assignSection(id, section[id].sectionName)
+    };
+    handleAssignSubjectChange = (id, value) => {
+        const { subject } = this.state;
+        subject[id] = value;
+        this.setState({ subject });
+        console.log(subject[id])
+        this.props.assignSubject(id, subject[id].subjectName)
+    };
+    
+    handleRemoveSubjectChange = (id, value) => {
+        const { subject } = this.state;
+        subject[id] = value;
+        this.setState({ subject });
+        console.log(id, subject[id].subjectName)
+        this.props.deleteAssignedSubject(id, subject[id].subjectName)
     };
 
     onChange = (e) => {
@@ -92,6 +111,17 @@ export class StudentManagement extends Component {
         const { students } = this.props.student
 
         const { sections } = this.props.section
+
+        const { subjects } = this.props.subject
+
+        const { assignedSubjects } = this.props.assignedSubject
+
+        
+        // const sectionsWithAssignedSubjects = sections.reduce((result, section) => {
+        //     const matchingAssignedSubjects = assignedSubjects.find(assignedSubject => assignedSubject.sectionId === section._id);
+        //     const mergedValues = [{ ...section, ...matchingAssignedSubjects }];
+        //     return [...result, ...mergedValues];
+        //   }, []);
 
         const { value } = this.state;
         // const theme = useTheme();
@@ -143,21 +173,26 @@ export class StudentManagement extends Component {
         }
         const assignSection = (students) => {
             return <Dropdown value={this.state.section[students._id]}
-                onChange={(e) => this.handleDropdownChange(students._id, e.value)} options={sections} optionLabel="sectionName"
+                onChange={(e) => this.handleSectionDropdownChange(students._id, e.value)} options={sections} optionLabel="sectionName"
                 placeholder="Select Section" className="w-full md:w-14rem" />
         }
         const sectionName = (sections) => {
             return sections.sectionName
         }
-        const assignSubject = (students) => {
-            return <Dropdown value={this.state.section[students._id]}
-                onChange={(e) => this.handleDropdownChange(students._id, e.value)} options={sections} optionLabel="sectionName"
-                placeholder="Select Section" className="w-full md:w-14rem" />
+        const viewAssignedSubjects = (assignedSubjects) => {
+            // while(sections._id === assignedSubjects.sectionId) {
+                return assignedSubjects.subjectName
+            
         }
-        const removeSubject = (students) => {
-            return <Dropdown value={this.state.section[students._id]}
-                onChange={(e) => this.handleDropdownChange(students._id, e.value)} options={sections} optionLabel="sectionName"
-                placeholder="Select Section" className="w-full md:w-14rem" />
+        const assignSubject = (sections) => {
+            return <Dropdown value={this.state.subject[sections._id]}
+                onChange={(e) => this.handleAssignSubjectChange(sections._id, e.value)} options={subjects} optionLabel="subjectName"
+                placeholder="Select Subject" className="w-full md:w-14rem" />
+        }
+        const removeSubject = (sections) => {
+            return <Dropdown value={this.state.subject[sections._id]}
+                onChange={(e) => this.handleRemoveSubjectChange(sections._id, e.value)} options={assignedSubjects} optionLabel="subjectName"
+                placeholder="Select Subject" className="w-full md:w-14rem" />
         }
 
         return (
@@ -223,6 +258,7 @@ export class StudentManagement extends Component {
                                     <div className="card">
                                         <DataTable value={sections} tableStyle={{ minWidth: '50rem' }}>
                                             <Column field="Section" header="Section" sortable body={sectionName} style={{ width: '25%' }}></Column>
+                                            <Column field="assignedSubjects" header="Assigned Subjects" sortable body={viewAssignedSubjects} style={{ width: '25%' }}></Column>
                                             <Column field="assignSubject" header="Assign Subject" sortable body={assignSubject} style={{ width: '25%' }}></Column>
                                             <Column field="removeSubject" header="Remove Subject" sortable body={removeSubject} style={{ width: '25%' }}></Column>
                                         </DataTable>
@@ -289,13 +325,20 @@ StudentManagement.propTypes = {
     getAllSections: PropTypes.func.isRequired,
     assignSection: PropTypes.func.isRequired,
     addSection: PropTypes.func.isRequired,
+    getAllSubjects: PropTypes.func.isRequired,
+    assignSubject: PropTypes.func.isRequired,
+    getAllAssignedSubjects: PropTypes.func.isRequired,
+    deleteAssignedSubject: PropTypes.func.isRequired,
     student: PropTypes.object.isRequired,
     section: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
     student: state.student,
-    section: state.section
+    section: state.section,
+    subject: state.subject,
+    assignedSubject: state.assignedSubject
 })
 
-export default connect(mapStateToProps, { getAllStudents, studentProfile, getAllSections, assignSection, addSection })(StudentManagement)
+export default connect(mapStateToProps, { getAllStudents, studentProfile, getAllSections, assignSection, assignSubject,
+    addSection, getAllSubjects, getAllAssignedSubjects, deleteAssignedSubject })(StudentManagement)

@@ -28,18 +28,6 @@ export const addNewStudent = (newStudent, body) => dispatch => {
 }
 
 
-// export const approveNewStudent = (id, isApproved) => {
-//     axios
-//         .put(`http://localhost:5000/api/newStudents/${id}`)
-//         .then(res =>
-//             dispatch({
-//                 type: EDIT_NEW_STUDENT,
-//                 payload: {
-//                     isApproved
-//                 }
-//             }))
-// }
-
 export const approveNewStudent = (id, isApproved) => async (dispatch) => {
     console.log(id, isApproved)
     const response = await fetch(`http://localhost:5000/api/newStudents/${id}`, {
