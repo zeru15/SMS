@@ -23,6 +23,8 @@ app.use('/api/sections', require('./routes/api/sections'))
 app.use('/api/subjects', require('./routes/api/subjects'))
 app.use('/api/assignedSubjects', require('./routes/api/assignedSubjects'))
 
+app.use('/api/newTeachers', require('./routes/api/newTeachers'))
+
 // DB Config
 const db = process.env.mongoURI;
 

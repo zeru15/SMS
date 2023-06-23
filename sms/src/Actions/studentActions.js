@@ -15,7 +15,7 @@ export const getNewStudents = () => async (dispatch, getState) => {
         })
 };
 
-export const addNewStudent = (newStudent, body) => dispatch => {
+export const addNewStudent = ( body) => dispatch => {
 
     console.log(body)
 

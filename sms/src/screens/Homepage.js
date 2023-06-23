@@ -10,6 +10,7 @@ import Homepage1 from "./../Images/Homepage2.jpg"
 import { Grid, Link } from '@material-ui/core'
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 import { addNewStudent } from './../Actions/studentActions';
+import {  addNewTeacher } from './../Actions/teacherActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -25,13 +26,22 @@ export class Homepage extends Component {
     parentEmail: '',
     transcript: null,
     applicationLetter: null,
+    teacherFirstName: '',
+    teacherLastName: '',
+    teacherEmail: '',
+    applyingSubject: '',
+    teacherApplicationLetter: null,
+    cv: null,
     modal: false,
-    modal2: false
+    modal2: false,
+    modal3: false
   }
 
   toggle = () => this.setState({ modal: !this.state.modal });
 
   toggle2 = () => this.setState({ modal2: !this.state.modal2 });
+
+  toggle3 = () => this.setState({ modal3: !this.state.modal3 });
 
   onChange = (e) => {
     this.setState({
@@ -61,9 +71,7 @@ export class Homepage extends Component {
       transcript: this.state.transcript
     }
 
-    this.props.addNewStudent(formData, reqBody);
-
-    console.log(formData)
+    this.props.addNewStudent(reqBody);
 
     this.setState({
       firstName: '',
@@ -76,9 +84,32 @@ export class Homepage extends Component {
     })
   }
 
-  // componentDidMount() {
-  //   this.props.addNewStudent()
-  // }
+  onSubmit2 = e => {
+    // e.preventDefault();
+
+    const reqBody = {
+      teacherFirstName: this.state.teacherFirstName,
+      teacherLastName: this.state.teacherLastName,
+      applyingSubject: this.state.applyingSubject,
+      teacherEmail: this.state.teacherEmail,
+      teacherApplicationLetter: this.state.teacherApplicationLetter,
+      cv: this.state.cv
+    }
+
+
+    this.props.addNewTeacher(reqBody);
+
+
+    this.setState({
+      teacherFirstName: '',
+      teacherLastName: '',
+      teacherEmail: '',
+      applyingSubject: '',
+      teacherApplicationLetter: null,
+      cv: null,
+    })
+  }
+
 
   render() {
     return (
@@ -169,7 +200,7 @@ export class Homepage extends Component {
                   className="mb-3"
                   onChange={this.onChange}
                 />
-                <Button type="submit" onClick ={this.toggle2} color="dark" style={{ marginTop: '2rem' }} block>
+                <Button type="submit" onClick={this.toggle2} color="dark" style={{ marginTop: '2rem' }} block>
                   Apply
                 </Button>
               </FormGroup>
@@ -178,6 +209,80 @@ export class Homepage extends Component {
           <ModalFooter>
           </ModalFooter>
         </Modal>
+
+        <Modal
+          isOpen={this.state.modal3}
+          toggle={this.toggle3}
+          backdrop={"static"}
+        >
+          <ModalHeader toggle={this.toggle3}> Apply for Job </ModalHeader>
+          <ModalBody>
+            <Form onSubmit={this.onSubmit2}>
+              <FormGroup>
+                <Label for='teacherFirstName'> First Name </Label>
+                <Input
+                  type="text"
+                  name="teacherFirstName"
+                  id="teacherFirstName"
+                  placeholder="FirstName"
+                  className="mb-3"
+                  onChange={this.onChange}
+                />
+                <Label for='teacherLastName'> Last Name </Label>
+                <Input
+                  type="text"
+                  name="teacherLastName"
+                  id="teacherLastName"
+                  placeholder="LastName"
+                  className="mb-3"
+                  onChange={this.onChange}
+                />
+                <Label for='applyingSubject'> Applying Subject </Label>
+                <Input
+                  type="text"
+                  name="applyingSubject"
+                  id="applyingSubject"
+                  placeholder="Applying Subject"
+                  className="mb-3"
+                  onChange={this.onChange}
+                />
+                <Label for='teacherEmail'> Email </Label>
+                <Input
+                  type="email"
+                  name="teacherEmail"
+                  id="teacherEmail"
+                  placeholder="Email"
+                  className="mb-3"
+                  onChange={this.onChange}
+                />
+                <Label for='transcript'> Cv </Label>
+                <Input
+                  type="file"
+                  name="cv"
+                  id="cv"
+                  placeholder="Cv"
+                  className="mb-3"
+                  onChange={this.onChange}
+                />
+                <Label for='teacherApplicationLetter'> Application Letter </Label>
+                <Input
+                  type="file"
+                  name="teacherApplicationLetter"
+                  id="teacherApplicationLetter"
+                  placeholder="Application Letter"
+                  className="mb-3"
+                  onChange={this.onChange}
+                />
+                <Button type="submit" onClick={this.toggle2} color="dark" style={{ marginTop: '2rem' }} block>
+                  Apply
+                </Button>
+              </FormGroup>
+            </Form>
+          </ModalBody>
+          <ModalFooter>
+          </ModalFooter>
+        </Modal>
+
 
 
 
@@ -222,8 +327,11 @@ export class Homepage extends Component {
         {/* Homepage Banner */}
         <div className=''>
           <div className='text-right mt-2 mr-10'>
-            <Button color="dark" onClick={this.toggle}>
-              Apply
+            <Button color="dark" onClick={this.toggle} className='mr-4'>
+              Apply as Student
+            </Button>
+            <Button color="dark" onClick={this.toggle3}>
+              Apply for Job
             </Button>
           </div>
 
@@ -237,12 +345,13 @@ export class Homepage extends Component {
 
 Homepage.propTypes = {
   addNewStudent: PropTypes.func.isRequired,
+  addNewTeacher: PropTypes.func.isRequired,
   newStudent: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
   newStudent: state.newStudent,
-
+  newTeacher: state.newTeacher,
 })
 
-export default connect(mapStateToProps, { addNewStudent })(Homepage)
+export default connect(mapStateToProps, { addNewStudent, addNewTeacher })(Homepage)
