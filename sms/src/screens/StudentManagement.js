@@ -189,9 +189,10 @@ export class StudentManagement extends Component {
                 onChange={(e) => this.handleAssignSubjectChange(sections._id, e.value)} options={subjects} optionLabel="subjectName"
                 placeholder="Select Subject" className="w-full md:w-14rem" />
         }
+
         const removeSubject = (sections) => {
             return <Dropdown value={this.state.subject[sections._id]}
-                onChange={(e) => this.handleRemoveSubjectChange(sections._id, e.value)} options={assignedSubjects} optionLabel="subjectName"
+                onChange={(e) => this.handleRemoveSubjectChange(sections._id, e.value)} options={assignedSubjects.filter(assignedSubject => assignedSubject.sectionId === sections._id)} optionLabel="subjectName"
                 placeholder="Select Subject" className="w-full md:w-14rem" />
         }
 

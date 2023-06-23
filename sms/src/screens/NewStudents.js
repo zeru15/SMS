@@ -185,7 +185,7 @@ export class NewStudents extends Component {
                         Student Applications
                     </div>
 
-                    <div className=''>
+                    <div className='mb-10'>
                         <Box sx={{ bgcolor: 'background.paper', width: '100%' }}>
                             <AppBar position="static">
                                 <Tabs
