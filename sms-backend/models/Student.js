@@ -12,18 +12,19 @@ const studentSchema = new Schema({
         required: true
     },
     // studentId: {
-    //     type: String,
-    //     required: true
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "NewStudent"
+    //     // required: true
     // },
     email: {
         type: String,
         required: true,
         unique: true
     },
-    password: {
-        type: String,
-        required: true
-    },
+    // password: {
+    //     type: String,
+    //     required: true
+    // },
     phone: {
         type: String
     },
@@ -68,11 +69,11 @@ const studentSchema = new Schema({
     },
     parentFirstName: {
         type: String,
-        required: true
+        // required: true
     },
     parentLastName: {
         type: String,
-        required: true
+        // required: true
     },
     parentEmail: {
         type: String,
@@ -80,7 +81,7 @@ const studentSchema = new Schema({
     },
     parentPhone: {
         type: String,
-        required: true
+        // required: true
     },
     gradeLevel: {
         type: String,
@@ -95,12 +96,12 @@ const studentSchema = new Schema({
         // ref: 'Section',
         default: null
     },
-    role: {
-        type: String,
-        // enum: ['student', 'teacher', 'parent', 'recordOfficer', 'director'], 
-        default: 'student',
-        required: true
-    },
+    // role: {
+    //     type: String,
+    //     // enum: ['student', 'teacher', 'parent', 'recordOfficer', 'director'], 
+    //     default: 'student',
+    //     required: true
+    // },
     img: {
         type: String,
         default: "https://res.cloudinary.com/cnq/image/upload/v1586197723/noimage_d4ipmd.png"

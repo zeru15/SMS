@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const assignedSubjectSchema = new Schema({
 
-    sectionId: {
+    gradeLevelId: {
         type: String
     },
     subjectName:{

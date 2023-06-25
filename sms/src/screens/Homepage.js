@@ -22,7 +22,7 @@ export class Homepage extends Component {
     firstName: '',
     lastName: '',
     gradeLevel: '',
-    studentEmail: '',
+    email: '',
     parentEmail: '',
     transcript: null,
     applicationLetter: null,
@@ -56,7 +56,7 @@ export class Homepage extends Component {
     formData.append("firstName", this.state.firstName)
     formData.append("lastName", this.state.lastName)
     formData.append("gradeLevel", this.state.gradeLevel)
-    formData.append("studentEmail", this.state.studentEmail)
+    formData.append("studentEmail", this.state.email)
     formData.append("parentEmail", this.state.parentEmail)
     formData.append("applicationLetter", this.state.applicationLetter)
     formData.append("transcript", this.state.transcript)
@@ -65,7 +65,7 @@ export class Homepage extends Component {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       gradeLevel: this.state.gradeLevel,
-      studentEmail: this.state.studentEmail,
+      email: this.state.email,
       parentEmail: this.state.parentEmail,
       applicationLetter: this.state.applicationLetter,
       transcript: this.state.transcript
@@ -77,7 +77,7 @@ export class Homepage extends Component {
       firstName: '',
       lastName: '',
       grade: '',
-      studentEmail: '',
+      email: '',
       parentEmail: '',
       transcript: null,
       appLetter: null,
@@ -167,8 +167,8 @@ export class Homepage extends Component {
                 <Label for='studentEmail'> Student Email </Label>
                 <Input
                   type="email"
-                  name="studentEmail"
-                  id="studentEmail"
+                  name="email"
+                  id="email"
                   placeholder="Student Email"
                   className="mb-3"
                   onChange={this.onChange}

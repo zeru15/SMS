@@ -5,7 +5,7 @@ import {
 import Homepage1 from "./../Images/Homepage2.jpg"
 import { Grid, Paper, Avatar, Typography, Link } from '@material-ui/core'
 import { Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
-import { addStudent } from './../Actions/studentActions';
+// import { addStudent } from './../Actions/studentActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -14,10 +14,6 @@ import { connect } from 'react-redux';
 export class Register extends Component {
 
     state = {
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
         phone: '',
         dateOfBirth: '',
         sex: '',
@@ -34,7 +30,6 @@ export class Register extends Component {
         medicalStatus: '',
         parentFirstName: '',
         parentLastName: '',
-        parentEmail: '',
         parentPhone: '',
         img: '',
 
@@ -49,36 +44,32 @@ export class Register extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("firstName", this.state.firstName)
-        formData.append("lastName", this.state.lastName)
-        formData.append("email", this.state.email)
-        formData.append("password", this.state.password)
-        formData.append("phone", this.state.phone)
-        formData.append("dateOfBirth", this.state.dateOfBirth)
-        formData.append("sex", this.state.sex)
-        formData.append("nationality", this.state.nationality)
-        formData.append("region", this.state.region)
-        formData.append("city", this.state.city)
-        formData.append("subCity", this.state.subCity)
-        formData.append("kebele", this.state.kebele)
-        formData.append("houseNumber", this.state.houseNumber)
-        formData.append("height", this.state.height)
-        formData.append("weight", this.state.weight)
-        formData.append("bloodType", this.state.bloodType)
-        formData.append("eyeColor", this.state.eyeColor)
-        formData.append("medicalStatus", this.state.medicalStatus)
-        formData.append("parentFirstName", this.state.parentFirstName)
-        formData.append("parentLastName", this.state.parentLastName)
-        formData.append("parentEmail", this.state.parentEmail)
-        formData.append("parentPhone", this.state.parentPhone)
-        formData.append("img", this.state.img)
+        // const formData = new FormData();
+        // formData.append("firstName", this.state.firstName)
+        // formData.append("lastName", this.state.lastName)
+        // formData.append("email", this.state.email)
+        // formData.append("password", this.state.password)
+        // formData.append("phone", this.state.phone)
+        // formData.append("dateOfBirth", this.state.dateOfBirth)
+        // formData.append("sex", this.state.sex)
+        // formData.append("nationality", this.state.nationality)
+        // formData.append("region", this.state.region)
+        // formData.append("city", this.state.city)
+        // formData.append("subCity", this.state.subCity)
+        // formData.append("kebele", this.state.kebele)
+        // formData.append("houseNumber", this.state.houseNumber)
+        // formData.append("height", this.state.height)
+        // formData.append("weight", this.state.weight)
+        // formData.append("bloodType", this.state.bloodType)
+        // formData.append("eyeColor", this.state.eyeColor)
+        // formData.append("medicalStatus", this.state.medicalStatus)
+        // formData.append("parentFirstName", this.state.parentFirstName)
+        // formData.append("parentLastName", this.state.parentLastName)
+        // formData.append("parentEmail", this.state.parentEmail)
+        // formData.append("parentPhone", this.state.parentPhone)
+        // formData.append("img", this.state.img)
 
         const reqBody = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            password: this.state.password,
             phone: this.state.phone,
             dateOfBirth: this.state.dateOfBirth,
             sex: this.state.sex,
@@ -95,20 +86,15 @@ export class Register extends Component {
             medicalStatus: this.state.medicalStatus,
             parentFirstName: this.state.parentFirstName,
             parentLastName: this.state.parentLastName,
-            parentEmail: this.state.parentEmail,
             parentPhone: this.state.parentPhone,
             img: this.state.img,
         }
 
-        this.props.addStudent(formData, reqBody);
+        // this.props.addStudent(reqBody);
 
-        console.log(formData)
+        // console.log(formData)
 
         this.setState({
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
             phone: '',
             dateOfBirth: '',
             sex: '',
@@ -125,7 +111,6 @@ export class Register extends Component {
             medicalStatus: '',
             parentFirstName: '',
             parentLastName: '',
-            parentEmail: '',
             parentPhone: '',
             img: null
         })
@@ -151,54 +136,6 @@ export class Register extends Component {
                                 </Grid>
                                 <Form onSubmit={this.onSubmit}>
                                     <FormGroup>
-                                        <Row>
-                                            <Col md={6} >
-                                                <Label for='firstName'> First Name </Label>
-                                                <Input
-                                                    type="text"
-                                                    name="firstName"
-                                                    id="firstName"
-                                                    placeholder="First Name"
-                                                    className="mb-3"
-                                                    onChange={this.onChange}
-                                                />
-                                            </Col>
-                                            <Col md={6}>
-                                                <Label for='lastName'> Last Name </Label>
-                                                <Input
-                                                    type="text"
-                                                    name="lastName"
-                                                    id="lastName"
-                                                    placeholder="Last Name"
-                                                    className="mb-3"
-                                                    onChange={this.onChange}
-                                                />
-                                            </Col>
-                                        </Row>
-                                        {/* <Row>
-                                    <Col md={6} >
-                                        <Label for='email'> Email </Label>
-                                        <Input
-                                            type="email"
-                                            name="email"
-                                            id="email"
-                                            placeholder="Email"
-                                            className="mb-3"
-                                            onChange={this.onChange}
-                                        />
-                                    </Col>
-                                    <Col md={6}>
-                                        <Label for='password'> Password </Label>
-                                        <Input
-                                            type="password"
-                                            name="password"
-                                            id="password"
-                                            placeholder="Password"
-                                            className="mb-3"
-                                            onChange={this.onChange}
-                                        />
-                                    </Col>
-                                </Row> */}
                                         <Row>
                                             <Col md={6} >
                                                 <Label for='phone'> Phone </Label>
@@ -392,7 +329,7 @@ export class Register extends Component {
                                             </Col>
                                         </Row>
                                         <Row>
-                                            <Col md={6} >
+                                            {/* <Col md={6} >
                                                 <Label for='parentEmail'> Parent Email </Label>
                                                 <Input
                                                     type="email"
@@ -402,7 +339,7 @@ export class Register extends Component {
                                                     className="mb-3"
                                                     onChange={this.onChange}
                                                 />
-                                            </Col>
+                                            </Col> */}
                                             <Col md={6}>
                                                 <Label for='parentPhone'> Parent Phone </Label>
                                                 <Input
@@ -451,7 +388,7 @@ export class Register extends Component {
 
 
 Register.propTypes = {
-    addStudent: PropTypes.func.isRequired,
+    // addStudent: PropTypes.func.isRequired,
     student: PropTypes.object.isRequired
 }
 
@@ -460,4 +397,4 @@ const mapStateToProps = (state) => ({
 
 })
 
-export default connect(mapStateToProps, { addStudent })(Register)
+export default connect(mapStateToProps, {  })(Register)

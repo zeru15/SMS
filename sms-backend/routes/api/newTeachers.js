@@ -15,13 +15,13 @@ router.post('/', upload.single('img'),  newTeachersController.addNewTeacher )
 // @route GET api/newStudents
 // @desc Get All New Students
 // @access public
-// router.get('/', newTeachersController.getAllNewTeachers)
+router.get('/', newTeachersController.getAllNewTeachers)
 
 
 // @route GET api/newStudents
 // @desc Get All New Students
 // @access public
-// router.put('/:id', newTeachersController.approveNewTeachers)
+router.put('/:id', newTeachersController.approveNewTeachers)
 
 
 module.exports = router;

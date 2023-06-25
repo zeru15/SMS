@@ -17,8 +17,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from 'reactstrap';
-import { getAllStudents } from './../Actions/studentActions'
-import { markAttendance } from './../Actions/attendanceActions'
+import { getAllTeachers } from './../Actions/teacherActions'
+import { markAttendance } from './../Actions/teacherAttendanceActions'
 import { connect } from 'react-redux';
 
 
@@ -43,7 +43,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-export class Attendance extends Component {
+export class TeacherAttendance extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -59,7 +59,7 @@ export class Attendance extends Component {
     };
 
     componentDidMount() {
-        this.props.getAllStudents();
+        this.props.getAllTeachers();
     }
 
     onPresent = (id) => {
@@ -68,13 +68,12 @@ export class Attendance extends Component {
     }
 
     onAbsent = (id) => {
-        const currentDate = new Date().toLocaleDateString();
-        this.props.markAttendance(id, false, currentDate)
+        this.props.markAttendance(id, true)
     }
 
     render() {
 
-        const { students } = this.props.student
+        const { teachers } = this.props.teacher
 
         const { value } = this.state;
         // const theme = useTheme();
@@ -158,19 +157,19 @@ export class Attendance extends Component {
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
-                                                    {students.map(student => (
-                                                        <StyledTableRow key={student._id}>
+                                                    {teachers.map(teacher => (
+                                                        <StyledTableRow key={teacher._id}>
                                                             <StyledTableCell component="th" scope="row">
-                                                                {student.firstName}
+                                                                {teacher.teacherFirstName}
                                                             </StyledTableCell>
                                                             <StyledTableCell align="right" >
-                                                                {student.lastName}
+                                                                {teacher.teacherLastName}
                                                             </StyledTableCell>
                                                             <StyledTableCell align="right">
-                                                                <Button color="primary" onClick={this.onPresent.bind(this, student._id)} className='text-white font-bold py-2 px-2 rounded'> Present </Button>
+                                                                <Button color="primary" onClick={this.onPresent.bind(this, teacher._id)} className='text-white font-bold py-2 px-2 rounded'> Present </Button>
                                                             </StyledTableCell>
                                                             <StyledTableCell align="right">
-                                                                <Button color="danger" onClick={this.onAbsent.bind(this, student._id)} className='text-white font-bold py-2 px-2  rounded' > Absent </Button> </StyledTableCell>
+                                                                <Button color="danger" onClick={this.onAbsent.bind(this, teacher._id)} className='text-white font-bold py-2 px-2  rounded' > Absent </Button> </StyledTableCell>
                                                         </StyledTableRow>
                                                     ))}
 
@@ -197,15 +196,15 @@ export class Attendance extends Component {
     }
 }
 
-Attendance.propTypes = {
-    getAllStudents: PropTypes.func.isRequired,
+TeacherAttendance.propTypes = {
+    getAllTeachers: PropTypes.func.isRequired,
     markAttendance: PropTypes.func.isRequired,
-    students: PropTypes.object.isRequired
+    teacher: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-    student: state.student,
+    teacher: state.teacher,
 
 })
 
-export default connect(mapStateToProps, { getAllStudents, markAttendance })(Attendance)
+export default connect(mapStateToProps, { getAllTeachers, markAttendance })(TeacherAttendance)

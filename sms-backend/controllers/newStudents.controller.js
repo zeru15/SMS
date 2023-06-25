@@ -18,7 +18,7 @@ exports.addNewStudent = async (req, res, next) => {
     const newNewStudent = new NewStudent({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        studentEmail: req.body.studentEmail,
+        email: req.body.email,
         parentEmail: req.body.parentEmail,
         gradeLevel: req.body.gradeLevel,
         // applicationLetter: req.body.applicationLetter,

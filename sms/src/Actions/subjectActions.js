@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_SUBJECTS, GET_ASSIGNED_SUBJECTS, DELETE_ASSIGNED_SUBJECT } from './Types'
+import { GET_SUBJECTS, GET_ASSIGNED_SUBJECTS, DELETE_ASSIGNED_SUBJECT, ADD_SUBJECT } from './Types'
 
 export const getAllSubjects = () => async (dispatch, getState) => {
 
@@ -13,6 +13,26 @@ export const getAllSubjects = () => async (dispatch, getState) => {
 
         })
 };
+
+export const addSubject = (subjectName) => dispatch => {
+
+    console.log(subjectName)
+
+    const config = {
+        headers: { 
+            "Content-type": "application/json"
+        }
+    }
+
+    const body = JSON.stringify({ subjectName })
+
+    axios.post("http://localhost:5000/api/subjects", body, config )
+        .then(res =>
+            dispatch({
+                type: ADD_SUBJECT,
+                payload: res.data
+            }))
+}
 
 export const assignSubject = (id, subjectName) => async (dispatch) => {
     console.log(id, subjectName)

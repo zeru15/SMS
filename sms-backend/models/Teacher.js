@@ -16,10 +16,10 @@ const teacherSchema = new Schema ({
         required: true,
         unique: true
     },
-    teacherPassword : {
-        type: String,
-        required: true
-    },
+    // teacherPassword : {
+    //     type: String,
+    //     required: true
+    // },
     teacherPhone: { 
         type: String
     },
@@ -34,15 +34,10 @@ const teacherSchema = new Schema ({
     },
     teachingSubject:{
         type:String,
+        required: true
     },
     teacherQualification:{
         type:String,
-    },
-    role: { 
-        type: String, 
-        // enum: ['student', 'teacher', 'parent', 'recordOfficer', 'director'], 
-        default: 'teacher',
-        required: true
     },
     img:{
         type:String,

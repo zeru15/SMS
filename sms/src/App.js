@@ -12,6 +12,9 @@ import Profile from './screens/Profile';
 import Register from './screens/Register';
 import Attendance from './screens/Attendance';
 import StudentManagement from './screens/StudentManagement';
+import NewTeachers from './screens/NewTeachers';
+import TeacherAttendance from './screens/TeacherAttendance';
+import ViewAttendance from './screens/ViewAttendance';
 
 function App() {
   return (
@@ -21,10 +24,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/newStudents" element={<NewStudents />} />
+          <Route path="/newTeachers" element={<NewTeachers />} />
           <Route path="/announcements" element={<Announcements />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/register" element={<Register />} />
           <Route path="/attendance" element={<Attendance />} />
+          <Route path="/viewAttendance" element={<ViewAttendance/>} />
+          <Route path="/teacherAttendance" element={<TeacherAttendance />} />
           <Route path="/studentManagement" element={<StudentManagement />} />
         </Routes>
       </Provider>

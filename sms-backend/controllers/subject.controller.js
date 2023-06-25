@@ -19,15 +19,15 @@ exports.assignSubject = async (req, res) => {
     
     try {
       const assignedSubject = new AssignedSubject({
-        sectionId: req.params.id,
+        gradeLevelId: req.params.id,
         subjectName: req.body.subjectName,
       })
   
       // Check if subject for the section is already assigned
-      const existingAssignedSubject = await AssignedSubject.findOne({ sectionId: req.params.id, subjectName: req.body.subjectName });
+      const existingAssignedSubject = await AssignedSubject.findOne({ gradeLevelId: req.params.id, subjectName: req.body.subjectName });
       if (existingAssignedSubject) {
-        console.log('Subject Already assigned for this section')
-        res.status(400).json({ message: 'Subject Already assigned for this section' });
+        console.log('Subject Already assigned for this grade')
+        res.status(400).json({ message: 'Subject Already assigned for this grade' });
       }
       else {
         await assignedSubject.save();

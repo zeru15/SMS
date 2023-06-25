@@ -58,9 +58,9 @@ export const getAllStudents = () => async (dispatch, getState) => {
         })
 };
 
-export const addStudent = (student, body) => dispatch => {
+export const addStudent = (body) => dispatch => {
 
-    console.log(body)
+    console.log("unique", body)
 
     axios.post("http://localhost:5000/api/students", body)
         .then(res =>

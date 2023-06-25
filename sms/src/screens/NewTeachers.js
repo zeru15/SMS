@@ -6,7 +6,7 @@ import {
     ModalHeader,
     ModalBody,
     ModalFooter,
-  } from 'reactstrap';
+} from 'reactstrap';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -15,8 +15,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { getNewTeachers, approveNewTeacher, addTeacher } from './../Actions/teacherActions';
 import { registerUser, rejectUser } from './../Actions/authActions';
-import { approveNewStudent, addStudent, getNewStudents } from './../Actions/studentActions';
+// import { approveNewStudent } from './../Actions/studentActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fabClasses } from '@mui/material';
@@ -78,31 +79,30 @@ export class NewStudents extends Component {
 
 
     componentDidMount() {
-        this.props.getNewStudents()
+        this.props.getNewTeachers()
     }
 
     onApprove(id) {
         console.log(id)
-        const approvedStudent = this.props.newStudent.newStudents.find(newStudent => newStudent._id === id);
-        // const body = JSON.stringify(approvedStudent)
-        console.log("unique one", approvedStudent);
+        const approvedTeacher = this.props.newTeacher.newTeachers.find(newTeacher => newTeacher._id === id);
+        console.log("unique one", approvedTeacher);
 
         this.setState({ modal: !this.state.modal });
 
-        this.props.approveNewStudent(approvedStudent._id, true)
-        this.props.registerUser(approvedStudent.email, "Student")
-        this.props.addStudent(approvedStudent)
+        this.props.approveNewTeacher(approvedTeacher._id, true)
+        this.props.registerUser(approvedTeacher.teacherEmail, "Teacher")
+        this.props.addTeacher(approvedTeacher)
     }
 
     onReject = (id) => {
         console.log(id)
-        const rejectedStudent = this.props.newStudent.newStudents.find(newStudent => newStudent._id === id);
-        console.log(rejectedStudent.email);
+        const rejectedTeacher = this.props.newTeacher.newTeachers.find(newTeacher => newTeacher._id === id);
+        console.log(rejectedTeacher.teacherEmail);
 
         this.setState({ modal2: !this.state.modal2 });
 
-        this.props.rejectUser(rejectedStudent.email)
-        this.props.approveNewStudent(rejectedStudent._id, false)
+        this.props.rejectUser(rejectedTeacher.teacherEmail)
+        this.props.approveNewTeacher(rejectedTeacher._id, false)
     }
 
     render() {
@@ -143,10 +143,10 @@ export class NewStudents extends Component {
             };
         }
 
-        const { newStudents } = this.props.newStudent
+        const { newTeachers } = this.props.newTeacher
 
-        const approvedStudents = newStudents.filter(newStudent => newStudent.isApproved === true);
-        const rejectedStudents = newStudents.filter(newStudent => newStudent.isApproved === false);
+        const approvedTeachers = newTeachers.filter(newTeacher => newTeacher.teacherIsApproved === true);
+        const rejectedTeachers = newTeachers.filter(newTeacher => newTeacher.teacherIsApproved === false);
 
         return (
             <div className='flex  '>
@@ -155,8 +155,9 @@ export class NewStudents extends Component {
                     isOpen={this.state.modal}
                     toggle={this.toggle}
                     backdrop={"static"}
+                    key={newTeachers._id}
                 >
-                    <ModalHeader toggle={this.toggle}> Student Approved! </ModalHeader>
+                    <ModalHeader toggle={this.toggle}> Teacher Approved! </ModalHeader>
                     <ModalBody>
                         Approval Email Has Been Sent!
                     </ModalBody>
@@ -183,7 +184,7 @@ export class NewStudents extends Component {
                 {/* Right Side */}
                 <div className='grow'>
                     <div className='headerBg text-center p-28 text-4xl font-bold '>
-                        Student Applications
+                        Teacher Applications
                     </div>
 
                     <div className='mb-10'>
@@ -216,30 +217,28 @@ export class NewStudents extends Component {
                                                     <TableRow>
                                                         <StyledTableCell>First name</StyledTableCell>
                                                         <StyledTableCell align="right">Last Name</StyledTableCell>
-                                                        <StyledTableCell align="right">Applying Grade</StyledTableCell>
-                                                        <StyledTableCell align="right">Student Email</StyledTableCell>
-                                                        <StyledTableCell align="right">Parent Email</StyledTableCell>
+                                                        <StyledTableCell align="right">Applying Subject</StyledTableCell>
+                                                        <StyledTableCell align="right">Email</StyledTableCell>
                                                         <StyledTableCell align="right">Application Letter</StyledTableCell>
-                                                        <StyledTableCell align="right">Transcript</StyledTableCell>
+                                                        <StyledTableCell align="right">CV</StyledTableCell>
                                                         <StyledTableCell align="right">Approval</StyledTableCell>
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
-                                                    {newStudents.reverse().map((newStudent) => (
-                                                        <StyledTableRow key={newStudent._id}>
+                                                    {newTeachers.reverse().map((newTeacher) => (
+                                                        <StyledTableRow key={newTeacher._id}>
                                                             <StyledTableCell component="th" scope="row">
-                                                                {newStudent.firstName}
+                                                                {newTeacher.teacherFirstName}
                                                             </StyledTableCell>
-                                                            <StyledTableCell align="right" >{newStudent.lastName}</StyledTableCell>
-                                                            <StyledTableCell align="right">{newStudent.gradeLevel}</StyledTableCell>
-                                                            <StyledTableCell align="right">{newStudent.email}</StyledTableCell>
-                                                            <StyledTableCell align="right">{newStudent.parentEmail}</StyledTableCell>
-                                                            <StyledTableCell align="right">{newStudent.applicationLetter}</StyledTableCell>
-                                                            <StyledTableCell align="right">{newStudent.transcript}</StyledTableCell>
+                                                            <StyledTableCell align="right" >{newTeacher.teacherLastName}</StyledTableCell>
+                                                            <StyledTableCell align="right">{newTeacher.applyingSubject}</StyledTableCell>
+                                                            <StyledTableCell align="right">{newTeacher.teacherEmail}</StyledTableCell>
+                                                            <StyledTableCell align="right">{newTeacher.teacherApplicationLetter}</StyledTableCell>
+                                                            <StyledTableCell align="right">{newTeacher.cv}</StyledTableCell>
                                                             <StyledTableCell align="right">
-                                                                <Button disabled={newStudent.isApproved === null ? false : true} color="primary" onClick={this.onApprove.bind(this, newStudent._id)} className='text-white font-bold py-2 px-2 rounded'> Approve </Button>
-                                                                <Button disabled={newStudent.isApproved === null ? false : true} color="danger" onClick={this.onReject.bind(this, newStudent._id)} className='text-white font-bold py-2 px-2 mt-1.5 rounded' > Reject </Button> 
-                                                                </StyledTableCell>
+                                                                <Button disabled={newTeacher.teacherIsApproved === null ? false : true} color="primary" onClick={this.onApprove.bind(this, newTeacher._id)} className='text-white font-bold py-2 px-2 rounded'> Approve </Button><br />
+                                                                <Button disabled={newTeacher.teacherIsApproved === null ? false : true} color="danger" onClick={this.onReject.bind(this, newTeacher._id)} className='text-white font-bold py-2 px-2 mt-1.5 rounded' > Reject </Button>
+                                                            </StyledTableCell>
                                                         </StyledTableRow>
                                                     ))}
                                                 </TableBody>
@@ -256,25 +255,23 @@ export class NewStudents extends Component {
                                                     <TableRow>
                                                         <StyledTableCell>First name</StyledTableCell>
                                                         <StyledTableCell align="right">Last Name</StyledTableCell>
-                                                        <StyledTableCell align="right">Applying Grade</StyledTableCell>
-                                                        <StyledTableCell align="right">Student Email</StyledTableCell>
-                                                        <StyledTableCell align="right">Parent Email</StyledTableCell>
+                                                        <StyledTableCell align="right">Applying Subject</StyledTableCell>
+                                                        <StyledTableCell align="right">Email</StyledTableCell>
                                                         <StyledTableCell align="right">Application Letter</StyledTableCell>
-                                                        <StyledTableCell align="right">Transcript</StyledTableCell>
+                                                        <StyledTableCell align="right">CV</StyledTableCell>
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
-                                                    {approvedStudents.reverse().map((newStudent) => (
-                                                        <StyledTableRow key={newStudent._id}>
+                                                    {approvedTeachers.reverse().map((newTeacher) => (
+                                                        <StyledTableRow key={newTeacher._id}>
                                                             <StyledTableCell component="th" scope="row">
-                                                                {newStudent.firstName}
+                                                                {newTeacher.teacherFirstName}
                                                             </StyledTableCell>
-                                                            <StyledTableCell align="right" >{newStudent.lastName}</StyledTableCell>
-                                                            <StyledTableCell align="right">{newStudent.gradeLevel}</StyledTableCell>
-                                                            <StyledTableCell align="right">{newStudent.email}</StyledTableCell>
-                                                            <StyledTableCell align="right">{newStudent.parentEmail}</StyledTableCell>
-                                                            <StyledTableCell align="right">{newStudent.applicationLetter}</StyledTableCell>
-                                                            <StyledTableCell align="right">{newStudent.transcript}</StyledTableCell>
+                                                            <StyledTableCell align="right" >{newTeacher.teacherLastName}</StyledTableCell>
+                                                            <StyledTableCell align="right">{newTeacher.applyingSubject}</StyledTableCell>
+                                                            <StyledTableCell align="right">{newTeacher.teacherEmail}</StyledTableCell>
+                                                            <StyledTableCell align="right">{newTeacher.teacherApplicationLetter}</StyledTableCell>
+                                                            <StyledTableCell align="right">{newTeacher.cv}</StyledTableCell>
                                                         </StyledTableRow>
                                                     ))}
                                                 </TableBody>
@@ -292,25 +289,23 @@ export class NewStudents extends Component {
                                                     <TableRow>
                                                         <StyledTableCell>First name</StyledTableCell>
                                                         <StyledTableCell align="right">Last Name</StyledTableCell>
-                                                        <StyledTableCell align="right">Applying Grade</StyledTableCell>
-                                                        <StyledTableCell align="right">Student Email</StyledTableCell>
-                                                        <StyledTableCell align="right">Parent Email</StyledTableCell>
+                                                        <StyledTableCell align="right">Applying Subject</StyledTableCell>
+                                                        <StyledTableCell align="right">Email</StyledTableCell>
                                                         <StyledTableCell align="right">Application Letter</StyledTableCell>
-                                                        <StyledTableCell align="right">Transcript</StyledTableCell>
+                                                        <StyledTableCell align="right">CV</StyledTableCell>
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
-                                                    {rejectedStudents.reverse().map((newStudent) => (
-                                                        <StyledTableRow key={newStudent._id}>
+                                                    {rejectedTeachers.reverse().map((newTeacher) => (
+                                                        <StyledTableRow key={newTeacher._id}>
                                                             <StyledTableCell component="th" scope="row">
-                                                                {newStudent.firstName}
+                                                                {newTeacher.teacherFirstName}
                                                             </StyledTableCell>
-                                                            <StyledTableCell align="right" >{newStudent.lastName}</StyledTableCell>
-                                                            <StyledTableCell align="right">{newStudent.gradeLevel}</StyledTableCell>
-                                                            <StyledTableCell align="right">{newStudent.email}</StyledTableCell>
-                                                            <StyledTableCell align="right">{newStudent.parentEmail}</StyledTableCell>
-                                                            <StyledTableCell align="right">{newStudent.applicationLetter}</StyledTableCell>
-                                                            <StyledTableCell align="right">{newStudent.transcript}</StyledTableCell>
+                                                            <StyledTableCell align="right" >{newTeacher.teacherLastName}</StyledTableCell>
+                                                            <StyledTableCell align="right">{newTeacher.applyingSubject}</StyledTableCell>
+                                                            <StyledTableCell align="right">{newTeacher.teacherEmail}</StyledTableCell>
+                                                            <StyledTableCell align="right">{newTeacher.teacherApplicationLetter}</StyledTableCell>
+                                                            <StyledTableCell align="right">{newTeacher.cv}</StyledTableCell>
                                                         </StyledTableRow>
                                                     ))}
                                                 </TableBody>
@@ -329,19 +324,19 @@ export class NewStudents extends Component {
 }
 
 NewStudents.propTypes = {
-    getNewStudents: PropTypes.func.isRequired,
+    getNewTeachers: PropTypes.func.isRequired,
     registerUser: PropTypes.func.isRequired,
     rejectUser: PropTypes.func.isRequired,
-    approveNewStudent: PropTypes.func.isRequired,
-    addStudent: PropTypes.func.isRequired,
+    approveNewTeacher: PropTypes.func.isRequired,
+    addTeacher: PropTypes.func.isRequired,
     newStudent: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-    newStudent: state.newStudent,
+    newTeacher: state.newTeacher,
     users: state.users
 
 })
 
 
-export default connect(mapStateToProps, { getNewStudents, registerUser, rejectUser, approveNewStudent, addStudent })(NewStudents)
+export default connect(mapStateToProps, { getNewTeachers, approveNewTeacher, registerUser, rejectUser, addTeacher })(NewStudents)

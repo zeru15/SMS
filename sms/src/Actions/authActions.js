@@ -5,9 +5,10 @@ import { USERS_LOADING, USERS_LOADED,
     REGISTER_SUCCESS, REGISTER_FAIL } from './Types';
 
 //Register User
-export const registerUser = ( email ) => dispatch => {
+export const registerUser = ( email, role ) => dispatch => {
 
     console.log(email)
+    console.log(role)
     //Headers
     const config = {
         headers: { 
@@ -16,7 +17,7 @@ export const registerUser = ( email ) => dispatch => {
     }
 
     //Request body
-    const body = JSON.stringify({ email })
+    const body = JSON.stringify({ email, role })
 
     axios.post('http://localhost:5000/api/users', body, config )
          .then(res => dispatch({

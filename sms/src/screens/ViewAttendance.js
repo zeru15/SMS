@@ -18,7 +18,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from 'reactstrap';
 import { getAllStudents } from './../Actions/studentActions'
-import { markAttendance } from './../Actions/attendanceActions'
+// import { markAttendance } from './../Actions/attendanceActions'
 import { connect } from 'react-redux';
 
 
@@ -43,7 +43,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-export class Attendance extends Component {
+export class ViewAttendance extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -68,8 +68,7 @@ export class Attendance extends Component {
     }
 
     onAbsent = (id) => {
-        const currentDate = new Date().toLocaleDateString();
-        this.props.markAttendance(id, false, currentDate)
+        this.props.markAttendance(id, true)
     }
 
     render() {
@@ -197,9 +196,9 @@ export class Attendance extends Component {
     }
 }
 
-Attendance.propTypes = {
+ViewAttendance.propTypes = {
     getAllStudents: PropTypes.func.isRequired,
-    markAttendance: PropTypes.func.isRequired,
+    // markAttendance: PropTypes.func.isRequired,
     students: PropTypes.object.isRequired
 }
 
@@ -208,4 +207,4 @@ const mapStateToProps = (state) => ({
 
 })
 
-export default connect(mapStateToProps, { getAllStudents, markAttendance })(Attendance)
+export default connect(mapStateToProps, { getAllStudents })(ViewAttendance)

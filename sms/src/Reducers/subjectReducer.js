@@ -1,4 +1,4 @@
-import { GET_SUBJECTS, GET_ASSIGNED_SUBJECTS, DELETE_ASSIGNED_SUBJECT } from './../Actions/Types'
+import { GET_SUBJECTS, GET_ASSIGNED_SUBJECTS, DELETE_ASSIGNED_SUBJECT, ADD_SUBJECT } from './../Actions/Types'
 
 const initialState = {
     loading: false,
@@ -14,12 +14,12 @@ export const subjectReducer = (state = { subjects: [] }, action) => {
                 subjects: action.payload,
                 loading: false
             };
-        // case ADD_SECTION:
-        //     return {
-        //         ...state,
-        //         sections: [action.payload, ...state.sections],
-        //         loading: false
-        //     };
+        case ADD_SUBJECT:
+            return {
+                ...state,
+                subjects: [action.payload, ...state.subjects],
+                loading: false
+            };
         default: return state;
     }
 }

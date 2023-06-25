@@ -8,10 +8,14 @@ const nodemailer = require('nodemailer');
 const User = require('./../models/User')
 
 // @route POST api/users
-// @desc Get All Users
+// @desc Post User
 // @access public
 exports.addUser = (req, res) => {
-    const { email } = req.body
+    const  email  = req.body.email
+    const  role  = req.body.role
+
+    console.log({email})
+    console.log({role})
 
     // Generate temporary credentials
     const password = uuid.v4();
@@ -28,7 +32,8 @@ exports.addUser = (req, res) => {
 
             const newUser = new User({
                 email,
-                password
+                password,
+                role
             });
 
 
@@ -48,7 +53,7 @@ exports.addUser = (req, res) => {
                 from: 'zeruf5@gmail.com',
                 to: email,
                 subject: 'Congratulation You have been accepted!',
-                text: `We are happy to announce you that you have been accepted to enroll in our school. ${"\n"}${"\n"} Your temporary login credentials are ${"\n"}${"\n"} email: ${email} ${"\n"} password: "${password}"`
+                text: `We are happy to announce you that you have been accepted to be part of our school. ${"\n"}${"\n"} Your temporary login credentials are ${"\n"}${"\n"} email: ${email} ${"\n"} password: "${password}"`
             };
 
             transporter.sendMail(mailOptions, async (error, info) => {
@@ -88,7 +93,8 @@ exports.addUser = (req, res) => {
                                                 token,
                                                 user: {
                                                     id: user.id,
-                                                    email: user.email
+                                                    email: user.email,
+                                                    role: user.role
                                                 }
                                             });
 
@@ -124,7 +130,7 @@ exports.rejectUser = (req, res) => {
         from: 'zeruf5@gmail.com',
         to: email,
         subject: 'Your application has been rejected!',
-        text: `We have carefully reviewed your application and you have not been accepted to enroll in our school.${"\n"}${"\n"} For further information you can call us through 0911000000 or contact us in person.`
+        text: `We have carefully reviewed your application and you have not been accepted to be part of our school.${"\n"}${"\n"} For further information you can call us through 0911000000 or contact us in person.`
     };
 
     transporter.sendMail(mailOptions, async (error, info) => {

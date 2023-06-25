@@ -9,6 +9,6 @@ const gradeLevelSchema = new Schema({
   
 }, { timestamps: true });
 
-const GradeLevel = mongoose.model("Section", gradeLevelSchema);
+const GradeLevel = mongoose.model("GradeLevel", gradeLevelSchema);
 
 module.exports = GradeLevel;

@@ -26,22 +26,22 @@ exports.addNewTeacher = async (req, res, next) => {
     await newNewTeacher.save().then(newTeacher => res.json(newTeacher))
 }
 
-// exports.getAllNewTeachers = async (req, res, next) => {
-//     await NewTeacher.find()
-//         .sort({ date: -1 })
-//         .then(newTeacher => res.json(newTeacher))
-// }
+exports.getAllNewTeachers = async (req, res, next) => {
+    await NewTeacher.find()
+        .sort({ date: -1 })
+        .then(newTeacher => res.json(newTeacher))
+}
 
 
-// exports.approveNewTeachers = async (req, res) => {
-//     try {
-//       const id = req.params.id;
-//       const newValue = req.body.isApproved;
+exports.approveNewTeachers = async (req, res) => {
+    try {
+      const id = req.params.id;
+      const newValue = req.body.teacherIsApproved;
 
-//       const newTeacher = await NewTeacher.findByIdAndUpdate(id, { isApproved: newValue }, { new: true });
+      const newTeacher = await NewTeacher.findByIdAndUpdate(id, { teacherIsApproved: newValue }, { new: true });
 
-//       res.json({ message: 'Attribute successfully updated', newTeacher });
-//     } catch (err) {
-//       res.status(500).json({ error: err });
-//     }
-//   }
+      res.json({ message: 'Attribute successfully updated', newTeacher });
+    } catch (err) {
+      res.status(500).json({ error: err });
+    }
+  }

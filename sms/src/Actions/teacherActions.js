@@ -4,18 +4,18 @@ import {
     TEACHERS_LOADING, ADD_TEACHER, GET_TEACHERS, EDIT_NEW_TEACHER, GET_SELECTED_TEACHER
     } from './Types'
 
-// export const getNewStudents = () => async (dispatch, getState) => {
+export const getNewTeachers = () => async (dispatch, getState) => {
 
-//     await axios
-//         .get('http://localhost:5000/api/newStudents')
-//         .then(res => {
-//             dispatch({
-//                 type: GET_NEW_STUDENTS,
-//                 payload: res.data
-//             })
+    await axios
+        .get('http://localhost:5000/api/newTeachers')
+        .then(res => {
+            dispatch({
+                type: GET_NEW_TEACHERS,
+                payload: res.data
+            })
 
-//         })
-// };
+        })
+};
 
 export const addNewTeacher = (body) => dispatch => {
 
@@ -30,47 +30,42 @@ export const addNewTeacher = (body) => dispatch => {
 }
 
 
-// export const approveNewStudent = (id, isApproved) => async (dispatch) => {
-//     console.log(id, isApproved)
-//     const response = await fetch(`http://localhost:5000/api/newStudents/${id}`, {
-//         method: 'PUT',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({ isApproved }),
-//     });
-//     const data = await response.json();
-//     //   dispatch({
-//     //     type: EDIT_NEW_STUDENT,
-//     //     payload: data.newStudent
-//     //   });
-// };
+export const approveNewTeacher = (id, teacherIsApproved) => async (dispatch) => {
+    console.log(id, teacherIsApproved)
+    const response = await fetch(`http://localhost:5000/api/newTeachers/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ teacherIsApproved }),
+    });
+};
 
 
-// export const getAllStudents = () => async (dispatch, getState) => {
+export const getAllTeachers = () => async (dispatch, getState) => {
 
-//     await axios
-//         .get('http://localhost:5000/api/students')
-//         .then(res => {
-//             dispatch({
-//                 type: GET_STUDENTS,
-//                 payload: res.data
-//             })
+    await axios
+        .get('http://localhost:5000/api/teachers')
+        .then(res => {
+            dispatch({
+                type: GET_TEACHERS,
+                payload: res.data
+            })
 
-//         })
-// };
+        })
+};
 
-// export const addStudent = (student, body) => dispatch => {
+export const addTeacher = (body) => dispatch => {
 
-//     console.log(body)
+    console.log("unique", body)
 
-//     axios.post("http://localhost:5000/api/students", body)
-//         .then(res =>
-//             dispatch({
-//                 type: ADD_STUDENT,
-//                 payload: res.data
-//             }))
-// }
+    axios.post("http://localhost:5000/api/teachers", body)
+        .then(res =>
+            dispatch({
+                type: ADD_TEACHER,
+                payload: res.data
+            }))
+}
 
 // export const studentProfile = (id) => dispatch => {
 //     console.log(id)
