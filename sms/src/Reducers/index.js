@@ -6,6 +6,7 @@ import { authReducer } from './authReducer';
 import { sectionReducer } from './sectionReducer';
 import { subjectReducer, assignedSubjectReducer } from './subjectReducer';
 import { gradeLevelReducer } from './gradeLevelReducer';
+import { attendanceReducer } from './attendanceReducer';
 
 export default combineReducers({
     newStudent: newStudentReducer,
@@ -17,5 +18,6 @@ export default combineReducers({
     assignedSubject: assignedSubjectReducer,
     newTeacher: newTeacherReducer,
     teacher: teacherReducer,
-    gradeLevel: gradeLevelReducer
+    gradeLevel: gradeLevelReducer,
+    attendance: attendanceReducer
 })

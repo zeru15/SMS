@@ -24,6 +24,7 @@ export const ADD_SECTION = 'ADD_SECTION'
 export const ADD_SUBJECT = 'ADD_SUBJECT'
 
 export const MARK_ATTENDANCE = 'MARK_ATTENDANCE'
+export const GET_ATTENDANCE = 'GET_ATTENDANCE'
 
 export const GET_GRADELEVEL = 'GET_GRADELEVEL'
 

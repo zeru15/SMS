@@ -6,7 +6,7 @@ class Sidebar extends Component {
     render() {
 
         return (
-            <div className='w-1/5 bg-gray-800 text-white h-screen '>
+            <div className='w-1/5 bg-gray-800 text-white min-h-screen '>
 
                 {/* Logo */}
                 <div>

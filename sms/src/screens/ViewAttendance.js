@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
 import Sidebar from '../Components/Sidebar'
+import {
+    Button,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+} from 'reactstrap';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@mui/material/styles';
@@ -16,8 +23,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button } from 'reactstrap';
 import { getAllStudents } from './../Actions/studentActions'
+import { getAttendance } from './../Actions/attendanceActions'
 // import { markAttendance } from './../Actions/attendanceActions'
 import { connect } from 'react-redux';
 
@@ -48,6 +55,7 @@ export class ViewAttendance extends Component {
         super(props);
         this.state = {
             value: 0,
+            modal: ''
         };
     }
     handleChange = (event, newValue) => {
@@ -62,18 +70,18 @@ export class ViewAttendance extends Component {
         this.props.getAllStudents();
     }
 
-    onPresent = (id) => {
-        const currentDate = new Date().toLocaleDateString();
-        this.props.markAttendance(id, true, currentDate)
+    onViewAttendance = (id) => {
+        this.props.getAttendance(id)
+        this.toggle()
     }
 
-    onAbsent = (id) => {
-        this.props.markAttendance(id, true)
-    }
+    toggle = () => this.setState({ modal: !this.state.modal });
 
     render() {
 
         const { students } = this.props.student
+
+        const { attendances } = this.props.attendance
 
         const { value } = this.state;
         // const theme = useTheme();
@@ -114,6 +122,29 @@ export class ViewAttendance extends Component {
         return (
             <div className='flex  '>
 
+                <Modal
+                    isOpen={this.state.modal}
+                    toggle={this.toggle}
+                    backdrop={"static"}
+                    key={attendances._id}
+                >
+                    <ModalHeader toggle={this.toggle}> Confirm </ModalHeader>
+                    <ModalBody>
+                        {attendances.map((attendance, index) => {
+                            
+                                let num = 1;
+                                num = num + index
+                            
+                            return (
+                                <div>{num}. absent on {attendance.date}</div>
+                            )
+                        })}
+                    </ModalBody>
+                    <ModalFooter>
+
+                    </ModalFooter>
+                </Modal>
+
                 {/* Left Side */}
                 <Sidebar />
 
@@ -152,8 +183,7 @@ export class ViewAttendance extends Component {
                                                     <TableRow>
                                                         <StyledTableCell>First name</StyledTableCell>
                                                         <StyledTableCell align="right">Last Name</StyledTableCell>
-                                                        <StyledTableCell align="right">Present</StyledTableCell>
-                                                        <StyledTableCell align="right">Absent</StyledTableCell>
+                                                        <StyledTableCell align="right">View Attendance</StyledTableCell>
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
@@ -166,10 +196,8 @@ export class ViewAttendance extends Component {
                                                                 {student.lastName}
                                                             </StyledTableCell>
                                                             <StyledTableCell align="right">
-                                                                <Button color="primary" onClick={this.onPresent.bind(this, student._id)} className='text-white font-bold py-2 px-2 rounded'> Present </Button>
+                                                                <Button color="primary" onClick={this.onViewAttendance.bind(this, student._id)} className='text-white font-bold py-2 px-2 rounded'> View Attendance </Button>
                                                             </StyledTableCell>
-                                                            <StyledTableCell align="right">
-                                                                <Button color="danger" onClick={this.onAbsent.bind(this, student._id)} className='text-white font-bold py-2 px-2  rounded' > Absent </Button> </StyledTableCell>
                                                         </StyledTableRow>
                                                     ))}
 
@@ -198,13 +226,15 @@ export class ViewAttendance extends Component {
 
 ViewAttendance.propTypes = {
     getAllStudents: PropTypes.func.isRequired,
+    getAttendance: PropTypes.func.isRequired,
     // markAttendance: PropTypes.func.isRequired,
     students: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
     student: state.student,
+    attendance: state.attendance
 
 })
 
-export default connect(mapStateToProps, { getAllStudents })(ViewAttendance)
+export default connect(mapStateToProps, { getAllStudents, getAttendance })(ViewAttendance)

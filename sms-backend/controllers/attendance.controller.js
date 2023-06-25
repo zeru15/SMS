@@ -29,8 +29,8 @@ exports.markAttendance = async (req, res) => {
 
 exports.getAttendance = async (req, res, next) => {
 
-  const studentAttendances = await Attendance.find({ studentId: req.params.id });
+  const studentAttendances = await Attendance.find({ studentId: req.params.id, isPresent: false });
 
-  res.json({studentAttendances})
+  res.json(studentAttendances)
 
 }
