@@ -25,6 +25,7 @@ app.use('/api/assignedSubjects', require('./routes/api/assignedSubjects'))
 app.use('/api/teachers', require('./routes/api/teachers'))
 app.use('/api/newTeachers', require('./routes/api/newTeachers'))
 app.use('/api/gradeLevels', require('./routes/api/gradeLevels'))
+app.use('/api/auth', require('./routes/api/auth'))
 
 
 // DB Config
